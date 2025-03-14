@@ -17,6 +17,13 @@ public class Main {
         System.out.println("Please input the grid's x and y dimensions.");
         startX = input.nextInt();
         startY = input.nextInt();
+
+        if (startX<0 || startY<0) {
+            System.out.println("Invalid grid boundaries. Exiting program.");
+            input.close();
+            return;
+        }
+
         grid = new Grid(startX, startY);
 
         input.nextLine();   // Consume the line break from nextInt
