@@ -31,27 +31,35 @@ public class Robo {
         return direcao;
     }
 
+    public Ambiente pegaAmbiente(){
+        return ambiente;
+    }
+
     void setDirecao(String direcao){
         this.direcao = direcao;
+    }
+
+    void setPosX(int x){
+        posX = x;
+    }
+
+    void setPosY(int y){
+        posY = y;
     }
 
     public void mover(int dX, int dY){
         if(ambiente.dentroDosLimites(posX+dX, posY+dY)){
             posX = posX + dX;
             posY = posY + dY;
-            System.out.printf("Movendo robo %s para a posicao (%d, %d)\n", nome, posX, posY);
+            System.out.printf("Movendo robo %s para a posicao (%d, %d, 0)\n", nome, posX, posY);
         }
         else{
             System.out.printf("Posicao destino fora dos limites, o robo %s nao se moveu.\n", nome);
         }
     }
-    
-    /*
+
     public void exibirPosicao(){
         System.out.printf("Robo %s na posicao (%d, %d)\n", nome, posX, posY);
     }
-    */
-    public String toString(){
-        return String.format("Robo %s esta na posicao (%d, %d)", nome, posX, posY);
-    }
+
 }

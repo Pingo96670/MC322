@@ -27,13 +27,26 @@ public class RoboAereo extends Robo{
     }
 
     void descer(int dA){
-        if((altitude-dA)>=0){
-            altitude = altitude - dA;
-            System.out.printf("Robo %s desceu para altitude %d metros.\n", pegaNome(), altitude);
+        altitude = altitude - dA;
+        if(altitude<0){ 
+            altitude = 0;
+        }
+        System.out.printf("Robo %s desceu para altitude %d metros.\n", pegaNome(), altitude);
+    }
+
+    public void exibirPosicao(){
+        System.out.printf("Robo %s na posicao (%d, %d, %d)\n", pegaNome(), pegaPosX(), pegaPosY(), altitude);
+    }
+
+    public void mover(int dX, int dY, int dA){
+        if((pegaAmbiente()).dentroDosLimites(pegaPosX()+dX, pegaPosY()+dY, altitude+dA)){
+            setPosX(pegaPosX()+dX);
+            setPosY(pegaPosY()+dY);
+            altitude = altitude + dA;
+            System.out.printf("Movendo robo %s para a posicao (%d, %d, 0)\n", pegaNome(), pegaPosX(), pegaPosY());
         }
         else{
-            altitude = 0;
-            System.out.printf("Robo %s desceu para altitude 0 metros.\n", pegaNome());
+            System.out.printf("Posicao destino fora dos limites, o robo %s nao se moveu.\n", pegaNome());
         }
     }
 }

@@ -18,4 +18,8 @@ public class RoboTerrestre extends Robo{
          System.out.printf("Velocidade acima da suportada pelo robo, posicao nao foi alterada.\n");
       }    
    }
+
+   public void exibirPosicao(){
+      System.out.printf("Robo %s na posicao (%d, %d, 0)\n", pegaNome(), pegaPosX(), pegaPosY());
+  }
 }
