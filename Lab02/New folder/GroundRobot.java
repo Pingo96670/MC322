@@ -1,17 +1,18 @@
 public class GroundRobot extends BaseRobot{
    private int maxSpeed;
 
-   public GroundRobot(String nome, Ambiente ambiente, int velMax){
-    super(nome, ambiente);
-    this.velMax = velMax;
+   public GroundRobot(String name, int posX, int posZ, int maxSpeed){
+    super(name, posX, posZ);
+    this.maxSpeed = maxSpeed;
+    super.setType("Ground Robot");
    }
 
-   public void mover(int dX, int dY, int vel){
-      if(vel <= velMax){
-         super.mover(dX, dY);
+   public void move(int dX, int dY, int spd){
+      if(spd <= maxSpeed){
+         super.move(dX, dY);
       }
       else{
-         System.out.printf("Velocidade acima da suportada pelo robo, posicao nao foi alterada.\n");
+         System.out.printf("Speed exceeds the robot's limit, position wasn't changed.\n");
       }    
    }
 

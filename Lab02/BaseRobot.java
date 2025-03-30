@@ -9,7 +9,7 @@ public class BaseRobot {
     // Robot constructor
     public BaseRobot(String name, int startX, int startZ) {
         this.name = name;
-        this.type = "Base";
+        this.type = "Base Robot";
         this.posX = startX;
         this.posZ = startZ;
     }
@@ -99,5 +99,9 @@ public class BaseRobot {
 
     public static void setEnvironment(Environment environment) {
         BaseRobot.environment = environment;
+    }
+
+    public void setType(String type){
+        this.type = type;
     }
 }

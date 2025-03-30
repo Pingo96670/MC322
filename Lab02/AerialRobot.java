@@ -4,7 +4,7 @@ public class AerialRobot extends BaseRobot {
 
     public AerialRobot(String name, int startX, int startZ, int maxPosY) {
         super(name, startX, startZ);
-        this.type = "Base Aerial";
+        super.setType("Aerial Robot");
         this.maxPosY = maxPosY;
         this.posY = 0;
     }
