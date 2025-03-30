@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Environment {
     private final int sizeX;    // Environment's x dimension
     private final int sizeY;    // Environment's y dimension
-    private final int sizeZ;    // Environment's y dimension
+    private final int sizeZ;    // Environment's z dimension
     private ArrayList<BaseRobot> robotList = new ArrayList<BaseRobot>();
 
     // Environment constructor
