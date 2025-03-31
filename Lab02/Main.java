@@ -1,5 +1,3 @@
-package Lab02;
-
 public class Main {
     public static void main(String[] args) {
         // Initializing variables;
@@ -22,15 +20,23 @@ public class Main {
 
         // Test batch 1: Base robot
         rob.printPos();
+        rob.printDir();
             // Basic movement
         rob.move(1, 1);
         rob.printPos();
-            // Collision with another robot
-        rob.move(4, 4);
+        rob.printDir();
+
+        rob.move(0, -1);
         rob.printPos();
+        rob.printDir();
+            // Collision with another robot
+        rob.move(4, 5);
+        rob.printPos();
+        rob.printDir();
             // Out of bounds
         rob.move(11, 11);
         rob.printPos();
+        rob.printDir();
         System.out.println();
 
         // Test batch 2: Ground robot

@@ -1,13 +1,11 @@
-package Lab02;
-
 import java.util.ArrayList;
 
 public class Environment {
     private final int sizeX;    // Environment's x dimension
     private final int sizeY;    // Environment's y dimension
     private final int sizeZ;    // Environment's z dimension
-    private final ArrayList<BaseRobot> robotList = new ArrayList<>();
-    private final int[][][] obstacleMatrix;
+    private final ArrayList<BaseRobot> robotList = new ArrayList<>();   // List of robots in the environment
+    private final int[][][] obstacleMatrix;     // int boolean multidimensional array of obstacles (e.g., robots)
 
     // Environment constructor
     public Environment(int sizeX, int sizeY, int sizeZ) {
@@ -18,10 +16,12 @@ public class Environment {
         this.obstacleMatrix = new int[sizeX + 1][sizeY + 1][sizeZ + 1];
     }
 
+    // Adds a robot to robotList
     public void addRobot(BaseRobot bot) {
         robotList.add(bot);
     }
 
+    // Prints all robots in robotList, with their names, types and positions
     public void printRobotList() {
         System.out.println("List of robots:");
 
@@ -30,13 +30,13 @@ public class Environment {
         }
     }
 
-    // Method to check if a position is within environment bounds ([0, size])
+    // Checks if a position is within environment bounds ([0, size])
     public boolean isWithinBounds(int posX, int posY, int posZ) {
         return posX <= sizeX && posY <= sizeY && posZ <= sizeZ &&
                 posX >=0 && posY >= 0 && posZ >=0;
     }
 
-    // Setters and getters
+    // Getters
     public int getSizeX() {
         return sizeX;
     }
