@@ -2,19 +2,24 @@
 
 Repositório para os projetos de MC322.
 
-
-### Dupla:
+## Dupla:
 - Kauã Rodrigues da Conceição
 - João Pedro Kurohiji Bonani
 
-### TO-DO:
-- Casos testes fixos
-  - Como implementar sem lotar o main?
-  - Quais casos testar?
-- Métodos gets e sets para todos os atributos
-- Adições do Lab 02
-  - Robôs terrestres
-  - Robôs aéreos
-  - Obstáculos
-    - Como funcionará o movimento e a detecção de colisão?
-- Comentários mais detalhados
+
+## Execução:
+### A partir da pasta **raiz**:
+Para compilar e executar o Lab*XX* a partir da pasta **raiz** do projeto, abra a prompt de comando na pasta "MC322" e use:
+
+  ```
+  javac LabXX/*.java
+  java LabXX/Main
+  ```
+
+### A partir da pasta do **Lab*XX***:
+Para compilar e executar o Lab*XX* a partir de sua própria pasta, abra a prompt de comando na pasta "LabXX" e use:
+
+  ```
+  javac *.java
+  java Main
+  ```
