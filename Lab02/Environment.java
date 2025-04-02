@@ -1,16 +1,21 @@
+package Lab02;
+
 import java.util.ArrayList;
 
 public class Environment {
     private final int sizeX;    // Environment's x dimension
     private final int sizeY;    // Environment's y dimension
     private final int sizeZ;    // Environment's z dimension
-    private ArrayList<BaseRobot> robotList = new ArrayList<BaseRobot>();
+    private final ArrayList<BaseRobot> robotList = new ArrayList<>();
+    private final int[][][] obstacleMatrix;
 
     // Environment constructor
     public Environment(int sizeX, int sizeY, int sizeZ) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.sizeZ = sizeZ;
+
+        this.obstacleMatrix = new int[sizeX + 1][sizeY + 1][sizeZ + 1];
     }
 
     public void addRobot(BaseRobot bot) {
@@ -48,7 +53,7 @@ public class Environment {
         return robotList;
     }
 
-    public void setRobotList(ArrayList<BaseRobot> robotList) {
-        this.robotList = robotList;
+    public int[][][] getObstacleMatrix() {
+        return obstacleMatrix;
     }
 }

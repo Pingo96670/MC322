@@ -1,57 +1,72 @@
+package Lab02;
+
 public class BaseRobot {
-    protected final String name;    // Robot's name
-    protected int posX;    // Robot's x coordinate (environment's length)
-    protected int posZ;    // Robot's y coordinate (environment's width)
-    protected String type;
-    protected String direction = "North";
+    private final String name;    // Robot's name
+    private int posX;    // Robot's x coordinate (environment's length)
+    private int posZ;    // Robot's y coordinate (environment's width)
+    private String type;
+    private String direction = "North";
     private static Environment environment;
 
     // Robot constructor
     public BaseRobot(String name, int startX, int startZ) {
+        BaseRobot.environment.addRobot(this);
+        BaseRobot.environment.getObstacleMatrix()[startX][0][startZ] = 1;
+
         this.name = name;
-        this.type = "Base Robot";
+        this.type = "Base Bot";
         this.posX = startX;
         this.posZ = startZ;
     }
 
     // Method to update a robot's position and direction
     public void move(int dX, int dZ) {
-        this.posX += dX;
-        this.posZ += dZ;
-
-        if ((this.direction.equals("North") || this.direction.equals("South"))) {
-            if (dZ != 0) {
-                if (dZ > 0) {
-                    this.setDirection("East");
-                } else {
-                    this.setDirection("West");
-                }
-            } else {
-                if (dX > 0) {
-                    this.setDirection("North");
-                } else {
-                    this.setDirection("South");
-                }
-            }
+        if (!BaseRobot.environment.isWithinBounds(posX + dX, 0, posZ + dZ)) {
+            System.out.println("Position out of bounds. Position unchanged.");
+        } else if (checkObstacles(this.posX + dX, 0, this.posZ + dZ)) {
+            System.out.println("Selected position is occupied by another robot. Position unchanged.");
         } else {
-            if (dX != 0) {
-                if (dX > 0) {
-                    this.setDirection("North");
+            BaseRobot.environment.getObstacleMatrix()[posX][0][posZ] = 0;
+
+            this.posX += dX;
+            this.posZ += dZ;
+
+            BaseRobot.environment.getObstacleMatrix()[posX][0][posZ] = 1;
+
+            if ((this.direction.equals("North") || this.direction.equals("South"))) {
+                if (dZ != 0) {
+                    if (dZ > 0) {
+                        this.setDirection("East");
+                    } else {
+                        this.setDirection("West");
+                    }
                 } else {
-                    this.setDirection("South");
+                    if (dX > 0) {
+                        this.setDirection("North");
+                    } else {
+                        this.setDirection("South");
+                    }
                 }
             } else {
-                if (dZ > 0) {
-                    this.setDirection("East");
+                if (dX != 0) {
+                    if (dX > 0) {
+                        this.setDirection("North");
+                    } else {
+                        this.setDirection("South");
+                    }
                 } else {
-                    this.setDirection("West");
+                    if (dZ > 0) {
+                        this.setDirection("East");
+                    } else {
+                        this.setDirection("West");
+                    }
                 }
             }
         }
     }
 
-    public void checkObstacles() {
-
+    public boolean checkObstacles(int x, int y, int z) {
+        return BaseRobot.environment.getObstacleMatrix()[x][y][z] == 1;
     }
 
     // Method to print a robot's coordinates
