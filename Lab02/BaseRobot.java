@@ -5,7 +5,8 @@ The BaseRobot class is the basic class meant to be inherited by others.
 public class BaseRobot {
     private final String name;    // Robot's name
     private int posX;    // Robot's x coordinate (environment's length)
-    private int posZ;    // Robot's y coordinate (environment's width)
+    private int posY;    // Robot's y coordinate (environment's height) 
+    private int posZ;    // Robot's z coordinate (environment's width)
     private String type;    // Robot's type
     private String direction = "North";     // Robot's direction
     // North: +x
@@ -22,6 +23,7 @@ public class BaseRobot {
         this.name = name;
         this.type = "Base Bot";
         this.posX = startX;
+        this.posY = 0;
         this.posZ = startZ;
     }
 
@@ -32,18 +34,18 @@ public class BaseRobot {
     */
     public void move(int dX, int dZ) {
         // Out of bounds check
-        if (!BaseRobot.environment.isWithinBounds(posX + dX, 0, posZ + dZ)) {
+        if (!BaseRobot.environment.isWithinBounds(posX + dX, posY, posZ + dZ)) {
             System.out.println("Position out of bounds. Position unchanged.");
         // Collision check
-        } else if (checkObstacles(this.posX + dX, 0, this.posZ + dZ)) {
+        } else if (checkObstacles(this.posX + dX, posY, this.posZ + dZ)) {
             System.out.println("Selected position is occupied by another robot. Position unchanged.");
         // Movement logic
         } else {
             // Updating the environment's obstacle matrix
-            BaseRobot.environment.getObstacleMatrix()[posX][0][posZ] = 0;
+            BaseRobot.environment.getObstacleMatrix()[posX][posY][posZ] = 0;
             this.posX += dX;
             this.posZ += dZ;
-            BaseRobot.environment.getObstacleMatrix()[posX][0][posZ] = 1;
+            BaseRobot.environment.getObstacleMatrix()[posX][posY][posZ] = 1;
 
             // Facing x direction
             if ((this.direction.equals("North") || this.direction.equals("South"))) {
@@ -87,7 +89,7 @@ public class BaseRobot {
     // Method to print a robot's coordinates
     // Defaults to y = 0 for general case
     public void printPos() {
-        System.out.printf("- The robot \"%s\" (type \"%s\") is currently in the position (%d, 0, %d).\n", this.name, this.type, this.posX, this.posZ);
+        System.out.printf("- The robot \"%s\" (type \"%s\") is currently in the position (%d, %d, %d).\n", this.name, this.type, this.posX, this.posY, this.posZ);
     }
 
     // Method to print the direction a robot is facing
@@ -106,6 +108,14 @@ public class BaseRobot {
 
     public void setPosX(int posX) {
         this.posX = posX;
+    }
+
+    public int getPosY() {
+        return this.posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 
     public int getPosZ() {

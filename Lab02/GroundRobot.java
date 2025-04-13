@@ -13,6 +13,7 @@ public class GroundRobot extends BaseRobot {
    }
 
    // Moves the robot if totalDist <= maxSpeed
+   @Override
    public void move(int dX, int dZ) {
        int totalDist = Math.abs(dX) + Math.abs(dZ);
 
