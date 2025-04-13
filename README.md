@@ -13,7 +13,7 @@ Para compilar e executar o Lab*XX* a partir da pasta **raiz** do projeto, abra a
 
   ```
   javac LabXX/*.java
-  java LabXX/Main
+  java -cp LabXX Main
   ```
 
 ### A partir da pasta do **Lab*XX***:
