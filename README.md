@@ -13,7 +13,7 @@ Para compilar e executar o Lab*XX* a partir da pasta **raiz** do projeto, abra a
 
   ```
   javac LabXX/*.java
-  java LabXX/Main
+  java -cp LabXX Main
   ```
 
 ### A partir da pasta do **Lab*XX***:
@@ -23,3 +23,6 @@ Para compilar e executar o Lab*XX* a partir de sua própria pasta, abra a prompt
   javac *.java
   java Main
   ```
+
+## TO-DO:
+- Remover auto-referência no construtor de BaseRobot
