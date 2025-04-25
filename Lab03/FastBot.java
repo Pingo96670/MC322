@@ -23,6 +23,7 @@ public class FastBot extends GroundRobot {
             super.move(dX, dZ);
         } else {
             System.out.println("Movement speed is too low for this robot. Position unchanged.");
+            System.out.println();
         }
     }
 

@@ -17,7 +17,7 @@ public class BaseRobot {
 
     // BaseRobot constructor
     public BaseRobot(String name, int startX, int startZ) {
-        BaseRobot.environment.addRobot(this);   // TODO: Remover auto-referência no construtor
+        BaseRobot.environment.addRobot(this);
         BaseRobot.environment.getObstacleMatrix()[startX][0][startZ] = 1;
 
         this.name = name;
@@ -78,7 +78,11 @@ public class BaseRobot {
                     }
                 }
             }
+
+            System.out.printf("Robot %s moved to position (%d, %d, %d) and is now facing %s.\n", name, posX, posY, posZ, direction);
         }
+
+        System.out.println();
     }
 
     // Checks if an obstacle is in position (x, y, z)
@@ -130,6 +134,10 @@ public class BaseRobot {
         return type;
     }
 
+    public void setType(String type){
+        this.type = type;
+    }
+
     public String getDirection() {
         return direction;
     }
@@ -144,9 +152,5 @@ public class BaseRobot {
 
     public static void setEnvironment(Environment environment) {
         BaseRobot.environment = environment;
-    }
-
-    public void setType(String type){
-        this.type = type;
     }
 }

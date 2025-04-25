@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Environment {
-    private final int sizeX;    // Environment's x dimension
-    private final int sizeY;    // Environment's y dimension
-    private final int sizeZ;    // Environment's z dimension
+    private final int sizeX;    // Environment's x dimension (length)
+    private final int sizeY;    // Environment's y dimension (height)
+    private final int sizeZ;    // Environment's z dimension (width)
     private final ArrayList<BaseRobot> robotList = new ArrayList<>();   // List of robots in the environment
     private final int[][][] obstacleMatrix;     // int boolean multidimensional array of obstacles (e.g., robots)
 
