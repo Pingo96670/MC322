@@ -18,12 +18,14 @@ public class JetBot extends AerialRobot {
     // Consumes 1 liter of fuel per unit moved
     @Override
     public void move(int dX, int dY, int dZ) {
+        int startX = getPosX(), startY = getPosY(), startZ = getPosZ();
+
         int totalDist = Math.abs(dX) + Math.abs(dY) + Math.abs(dZ);
 
         if (totalDist <= this.fuel) {
             // Successful operation
             super.move(dX, dY, dZ);
-            fuel -= totalDist;
+            fuel -= Math.abs(getPosX() - startX) + Math.abs(getPosY() - startY) + Math.abs(getPosZ() - startZ);
         // Insufficient fuel
         } else {
             System.out.println("The robot does not have enough fuel to move to the desired position. Position unchanged.");

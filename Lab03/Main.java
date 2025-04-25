@@ -25,10 +25,10 @@ public class Main {
         Environment environment = new Environment(10, 10, 10);
         BaseRobot.setEnvironment(environment);
 
-        CamelRobot sandy = new CamelRobot("Sandy", 5, 5, 2, 10);
-        FastBot speedy = new FastBot("Speedy", 10, 5, 4, 8);
-        ParrotRobot talky = new ParrotRobot("Talky", 5, 10, 5);
-        JetBot jetty = new JetBot("Jetty", 10, 10, 10, 10);
+        CamelRobot sandy = new CamelRobot("Sandy", 5, 5, 2, 10, 5, 5);
+        FastBot speedy = new FastBot("Speedy", 10, 5, 4, 8, 5);
+        ParrotRobot talky = new ParrotRobot("Talky", 5, 10, 5, 5);
+        JetBot jetty = new JetBot("Jetty", 10, 10, 10, 10, 5);
 
         System.out.println(INTRODUCTION);
 

@@ -143,6 +143,7 @@ public class InteractiveMenu {
                 Can only move if the distance doesn't exceed its maximum speed.
                 
                 Position: (%d, %d, %d)
+                Facing: %s
                 Maximum speed: %d
                 Water stored: %d/%d
                 
@@ -154,7 +155,7 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(camelBot.getPosX(), camelBot.getPosY(), camelBot.getPosZ(), camelBot.getMaxSpeed(), camelBot.getWaterLevel(), camelBot.getStorageCapacity());
+                """.formatted(camelBot.getPosX(), camelBot.getPosY(), camelBot.getPosZ(), camelBot.getDirection(), camelBot.getMaxSpeed(), camelBot.getWaterLevel(), camelBot.getStorageCapacity());
 
             System.out.println(camelInfo);
             System.out.println("Please input a command.");
@@ -248,6 +249,7 @@ public class InteractiveMenu {
                 Can only move if the distance is within its minimum and maximum required speed.
                 
                 Position: (%d, %d, %d)
+                Facing: %s
                 Minimum speed: %d
                 Maximum speed: %d
                 
@@ -257,7 +259,7 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(fastBot.getPosX(), fastBot.getPosY(), fastBot.getPosZ(), fastBot.getMinSpeed(), fastBot.getMaxSpeed());
+                """.formatted(fastBot.getPosX(), fastBot.getPosY(), fastBot.getPosZ(), fastBot.getDirection(), fastBot.getMinSpeed(), fastBot.getMaxSpeed());
 
             System.out.println(fastInfo);
             System.out.println("Please input a command.");
@@ -324,6 +326,7 @@ public class InteractiveMenu {
                 Can forget learned phrases with the "Forget" command.
                 
                 Position: (%d, %d, %d)
+                Facing: %s                
                 Number of learned phrases: %d
                 
                 Available commands:
@@ -336,7 +339,7 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(parrotBot.getPosX(), parrotBot.getPosY(), parrotBot.getPosZ(), parrotBot.getLearnedPhrases().size());
+                """.formatted(parrotBot.getPosX(), parrotBot.getPosY(), parrotBot.getPosZ(), parrotBot.getDirection(), parrotBot.getLearnedPhrases().size());
 
             System.out.println(parrotInfo);
             System.out.println("Please input a command.");
@@ -436,6 +439,7 @@ public class InteractiveMenu {
                 Can be refueled with the "Refuel" command.
                 
                 Position: (%d, %d, %d)
+                Facing: %s
                 Fuel: %d/%d
                 
                 Available commands:
@@ -445,7 +449,7 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(jetBot.getPosX(), jetBot.getPosY(), jetBot.getPosZ(), jetBot.getFuel(), jetBot.getMaxFuel());
+                """.formatted(jetBot.getPosX(), jetBot.getPosY(), jetBot.getPosZ(), jetBot.getDirection(), jetBot.getFuel(), jetBot.getMaxFuel());
 
             System.out.println(jetInfo);
             System.out.println("Please input a command.");
@@ -526,7 +530,7 @@ public class InteractiveMenu {
             System.out.println("Active robots:");
             for (int i = 0; i < environment.getRobotList().size(); i++) {
                 BaseRobot currentBot = environment.getRobotList().get(i);
-                System.out.printf("- %s (%s): (%d, %d, %d)\n", currentBot.getName(), currentBot.getType(), currentBot.getPosX(), currentBot.getPosY(), currentBot.getPosZ());
+                System.out.printf("- %s (%s): (%d, %d, %d), facing %s\n", currentBot.getName(), currentBot.getType(), currentBot.getPosX(), currentBot.getPosY(), currentBot.getPosZ(), currentBot.getDirection());
             }
             System.out.println();
 

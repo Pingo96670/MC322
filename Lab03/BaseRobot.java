@@ -9,10 +9,10 @@ public class BaseRobot {
     private int posZ;    // Robot's z coordinate (environment's width)
     private String type;    // Robot's type
     private String direction = "North";     // Robot's direction
-    // North: +x
-    // South: -x
-    // East: +z
-    // West: -z
+    // North: +z
+    // South: -z
+    // East: +x
+    // West: -x
     private final ObstacleSensor obstacleSensor;
     private static Environment environment;     // The environment the robot is in || Set directly in main
 

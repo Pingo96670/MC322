@@ -5,7 +5,7 @@ public class Environment {
     private final int sizeY;    // Environment's y dimension (height)
     private final int sizeZ;    // Environment's z dimension (depth)
     private final ArrayList<BaseRobot> robotList = new ArrayList<>();   // List of robots in the environment
-    private final ArrayList<Obstacle> obstacleList = new ArrayList<>(); // List of ostacles in the environment
+    private final ArrayList<Obstacle> obstacleList = new ArrayList<>(); // List of obstacles in the environment
     private final int[][][] obstacleMatrix;     // int boolean multidimensional array of obstacles (0 = empty, 1 = robot, 2 and up = obstacle)
 
     // Environment constructor
