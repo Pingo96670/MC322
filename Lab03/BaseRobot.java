@@ -45,12 +45,14 @@ public class BaseRobot {
             int remainingDZ = dZ;
 
             if(this.direction.equals("North") || this.direction.equals("South")) {
-
+                
                 // Moves in Z axis first
-                direction = remainingDZ > 0 ? "North" : "South";
+                if(remainingDZ!=0) {
+                    direction = remainingDZ > 0 ? "North" : "South";
+                }
                 while(remainingDZ!=0) {
                     int step = Math.min(Math.abs(remainingDZ), (int)obstacleSensor.getDistanceRadius());
-
+                    
                     // Search for obstacles
                     if(obstacleSensor.isObstacleAhead(environment, this, direction, step)) {
                         System.out.printf("Obstacle detected in direction %s. Movement stopped.\n", direction);
@@ -65,7 +67,9 @@ public class BaseRobot {
                 }
 
                 // Moves in X axis
-                direction = remainingDX > 0 ? "East" : "West";
+                if(remainingDX!=0) {
+                    direction = remainingDX > 0 ? "East" : "West";
+                }
                 while(remainingDX!=0) {
                     int step = Math.min(Math.abs(remainingDX), (int)obstacleSensor.getDistanceRadius());
 
@@ -84,9 +88,11 @@ public class BaseRobot {
 
             }
             else {
-
+                
                 // Moves in X axis first
-                direction = remainingDX > 0 ? "East" : "West";
+                if(remainingDX!=0) {
+                    direction = remainingDX > 0 ? "East" : "West";
+                }
                 while(remainingDX!=0) {
                     int step = Math.min(Math.abs(remainingDX), (int)obstacleSensor.getDistanceRadius());
 
@@ -104,10 +110,12 @@ public class BaseRobot {
                 }
 
                 //Moves in Z axis
-                direction = remainingDZ > 0 ? "North" : "South";
+                if(remainingDZ!=0) {
+                    direction = remainingDZ > 0 ? "North" : "South";
+                }
                 while(remainingDZ!=0) {
                     int step = Math.min(Math.abs(remainingDZ), (int)obstacleSensor.getDistanceRadius());
-
+                    
                     // Search for obstacles
                     if(obstacleSensor.isObstacleAhead(environment, this, direction, step)) {
                         System.out.printf("Obstacle detected in direction %s. Movement stopped.\n", direction);
