@@ -9,8 +9,8 @@ public class ParrotRobot extends AerialRobot {
     private final ArrayList<String> learnedPhrases;     // List of phrases learned by the robot
 
     // ParrotRobot constructor
-    public ParrotRobot(String name, int startX, int startZ, int maxPosY){
-        super(name, startX, startZ, maxPosY);
+    public ParrotRobot(String name, int startX, int startZ, int maxPosY, double distanceRadius){
+        super(name, startX, startZ, maxPosY, distanceRadius);
         this.setType("Parrot Bot");
         this.learnedPhrases = new ArrayList<>();
     }

@@ -9,8 +9,8 @@ public class FastBot extends GroundRobot {
     private final int minSpeed;
 
     // FastRobot constructor
-    public FastBot(String name, int posX, int posZ, int minSpeed, int maxSpeed) {
-        super(name, posX, posZ, maxSpeed);
+    public FastBot(String name, int posX, int posZ, int minSpeed, int maxSpeed, double distanceRadius) {
+        super(name, posX, posZ, maxSpeed, distanceRadius);
         this.setType("Fast Bot");
         this.minSpeed = minSpeed;
     }

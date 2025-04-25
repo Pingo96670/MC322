@@ -7,8 +7,8 @@ public class JetBot extends AerialRobot {
     private final int maxFuel;  // Max fuel capacity
 
     // JetBot constructor
-    public JetBot(String name, int startX, int startZ, int maxPosY, int maxFuel) {
-        super(name, startX, startZ, maxPosY);
+    public JetBot(String name, int startX, int startZ, int maxPosY, int maxFuel, double distanceRadius) {
+        super(name, startX, startZ, maxPosY, distanceRadius);
         this.setType("Jet Bot");
         this.maxFuel = maxFuel;
         this.fuel = maxFuel;
