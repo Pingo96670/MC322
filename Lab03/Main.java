@@ -3,7 +3,7 @@ public class Main {
         // Initializing variables;
         Environment environment = new Environment(10, 10, 10);
         BaseRobot.setEnvironment(environment);
-
+         
         BaseRobot rob = new BaseRobot("Rob", 0, 0);
         GroundRobot rocky = new GroundRobot("Rocky", 0, 5, 3);
         CamelRobot sandy = new CamelRobot("Sandy", 5, 5, 2, 10);
@@ -11,7 +11,6 @@ public class Main {
         AerialRobot harpy = new AerialRobot("Harpy", 0, 10, 5);
         ParrotRobot talky = new ParrotRobot("Talky", 5, 10, 5);
         JetBot jetty = new JetBot("Jetty", 10, 10, 5, 10);
-
 
 
         // Test 0: Environment
