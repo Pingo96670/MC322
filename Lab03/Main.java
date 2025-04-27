@@ -22,13 +22,27 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int executionInput;
 
-        Environment environment = new Environment(10, 10, 10);
+        Environment environment = new Environment(15, 15, 15);
         BaseRobot.setEnvironment(environment);
 
-        CamelRobot sandy = new CamelRobot("Sandy", 5, 5, 2, 10, 5, 5);
-        FastBot speedy = new FastBot("Speedy", 10, 5, 4, 8, 5);
-        ParrotRobot talky = new ParrotRobot("Talky", 5, 10, 5, 5);
-        JetBot jetty = new JetBot("Jetty", 10, 10, 10, 10, 5);
+        CamelRobot sandy = new CamelRobot("Sandy", 0, 0, 4, 10, 4, 8);
+        FastBot speedy = new FastBot("Speedy", 0, 15, 4, 8, 4);
+        ParrotRobot talky = new ParrotRobot("Talky", 15, 0, 10, 4);
+        JetBot jetty = new JetBot("Jetty", 15, 15, 15, 10, 4);
+
+        environment.addRobot(sandy);
+        environment.addRobot(speedy);
+        environment.addRobot(talky);
+        environment.addRobot(jetty);
+
+        for (BaseRobot bot: environment.getRobotList()) {
+            bot.joinSensor();
+        }
+
+        environment.addObstacle(4, 4, ObstacleType.WATER);
+        environment.addObstacle(3, 13, ObstacleType.ROCK);
+        environment.addObstacle(8, 8, ObstacleType.MOUNTAIN);
+        environment.addObstacle(12, 10, ObstacleType.TREE);
 
         System.out.println(INTRODUCTION);
 
@@ -45,6 +59,7 @@ public class Main {
                     // Automated tests
                     case 1:
                         System.out.println("Running automated tests...\n");
+
                         // TODO: Automated tests
 
                         System.out.println();

@@ -1,5 +1,5 @@
 /*
-All robots have this sensor, it searchs for obstacles in the environment on a radius distance around a robot and is used to check collisions before moving a robot
+All robots have this sensor, it searches for obstacles in the environment on a radius distance around a robot and is used to check collisions before it moves.
  */
 
 public class ObstacleSensor extends Sensor {
@@ -42,7 +42,7 @@ public class ObstacleSensor extends Sensor {
     }
 
     // Verifies if there is an obstacle in all the robot's directions
-    public boolean isObstacleNear(Environment environment, BaseRobot robot){
+    public boolean isObstacleNear(Environment environment, BaseRobot robot) {
         if(isObstacleAhead(environment, robot, "North", getDistanceRadius())) {
             return true;
         }
@@ -73,12 +73,17 @@ public class ObstacleSensor extends Sensor {
     
     @Override
     // The robot verifies all directions in search of obstacles
-    public void monitor(Environment environment, BaseRobot robot) {
+    public void monitor() {
+        Environment environment = BaseRobot.getEnvironment();
+        BaseRobot robot = this.getOwnerBot();
+
         if(isObstacleNear(environment, robot)) {
             System.out.printf("%s detected a nearby obsctacle.\n", robot.getName());
         }
         else{
             System.out.printf("%s didn't detect a nearby obstacle in any direction.\n", robot.getName());
         }
+
+        System.out.println();
     }
 }

@@ -5,7 +5,7 @@ The CamelRobot class is a subclass of GroundRobot capable of storing and transpo
 public class CamelRobot extends GroundRobot {
     private final int storageCapacity; // Max volume of water in the reserve (liters)
     private int waterLevel; // Volume of water currently in reserve (liters)
-    private WaterSensor waterSensor;
+    private final WaterSensor waterSensor;
 
     // CamelRobot constructor
     public CamelRobot(String name, int posX, int posZ, int maxSpeed, int storageCapacity, double obstacleDistanceRadius, double waterDistanceRadius){
@@ -16,9 +16,15 @@ public class CamelRobot extends GroundRobot {
         this.waterSensor = new WaterSensor(waterDistanceRadius);
     }
 
+    @Override
+    public void joinSensor() {
+        super.joinSensor();
+        this.waterSensor.setOwnerBot(this);
+    }
+
     // Uses the WaterSensor to detect nearby water source
     public void searchWater() {
-        this.waterSensor.monitor(BaseRobot.getEnvironment(), this);
+        this.waterSensor.monitor();
     }
 
     // Fills the robot's reserve with [amount]
@@ -78,5 +84,9 @@ public class CamelRobot extends GroundRobot {
 
     public void setWaterLevel(int waterLevel) {
         this.waterLevel = waterLevel;
+    }
+
+    public WaterSensor getWaterSensor() {
+        return waterSensor;
     }
 }
