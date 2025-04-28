@@ -5,7 +5,7 @@ The BaseRobot class is the basic class meant to be inherited by others.
 public class BaseRobot {
     private final String name;    // Robot's name
     private int posX;    // Robot's x coordinate (environment's length)
-    private int posY;    // Robot's y coordinate (environment's height)
+    private int posY = 0;    // Robot's y coordinate (environment's height)
     private int posZ;    // Robot's z coordinate (environment's width)
     private String type;    // Robot's type
     private String direction = "North";     // Robot's direction
@@ -21,7 +21,6 @@ public class BaseRobot {
         this.name = name;
         this.type = "Base Bot";
         this.posX = startX;
-        this.posY = 0;
         this.posZ = startZ;
         this.obstacleSensor = new ObstacleSensor(sensorRadius);
     }
@@ -52,13 +51,12 @@ public class BaseRobot {
                     direction = remainingDZ > 0 ? "North" : "South";
                 }
                 while(remainingDZ!=0) {
-                    int step = Math.min(Math.abs(remainingDZ), (int)obstacleSensor.getDistanceRadius());
+                    int step = Math.min(Math.abs(remainingDZ), (int)obstacleSensor.getSensorRadius());
                     
                     // Search for obstacles
                     if(obstacleSensor.isObstacleAhead(environment, this, direction, step)) {
                         System.out.printf("Obstacle detected in direction %s. Movement stopped.\n", direction);
                         System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
-                        System.out.println();
                         return;
                     }
 
@@ -74,13 +72,12 @@ public class BaseRobot {
                     direction = remainingDX > 0 ? "East" : "West";
                 }
                 while(remainingDX!=0) {
-                    int step = Math.min(Math.abs(remainingDX), (int)obstacleSensor.getDistanceRadius());
+                    int step = Math.min(Math.abs(remainingDX), (int)obstacleSensor.getSensorRadius());
 
                     // Search for obstacles
                     if(obstacleSensor.isObstacleAhead(environment, this, direction, step)) {
                         System.out.printf("Obstacle detected in direction %s. Movement stopped.\n", direction);
                         System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
-                        System.out.println();
                         return;
                     }
 
@@ -99,13 +96,12 @@ public class BaseRobot {
                     direction = remainingDX > 0 ? "East" : "West";
                 }
                 while(remainingDX!=0) {
-                    int step = Math.min(Math.abs(remainingDX), (int)obstacleSensor.getDistanceRadius());
+                    int step = Math.min(Math.abs(remainingDX), (int)obstacleSensor.getSensorRadius());
 
                     // Search for obstacles
                     if(obstacleSensor.isObstacleAhead(environment, this, direction, step)) {
                         System.out.printf("Obstacle detected in direction %s. Movement stopped.\n", direction);
                         System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
-                        System.out.println();
                         return;
                     }
 
@@ -121,13 +117,12 @@ public class BaseRobot {
                     direction = remainingDZ > 0 ? "North" : "South";
                 }
                 while(remainingDZ!=0) {
-                    int step = Math.min(Math.abs(remainingDZ), (int)obstacleSensor.getDistanceRadius());
+                    int step = Math.min(Math.abs(remainingDZ), (int)obstacleSensor.getSensorRadius());
                     
                     // Search for obstacles
                     if(obstacleSensor.isObstacleAhead(environment, this, direction, step)) {
                         System.out.printf("Obstacle detected in direction %s. Movement stopped.\n", direction);
                         System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
-                        System.out.println();
                         return;
                     }
 
@@ -139,8 +134,7 @@ public class BaseRobot {
                 }
             }
 
-            System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
-            System.out.println();
+            System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
         }
 
     }
@@ -156,9 +150,8 @@ public class BaseRobot {
     }
 
     // Method to print a robot's coordinates
-    // Defaults to y = 0 for general case
     public void printPos() {
-        System.out.printf("- The robot \"%s\" (type \"%s\") is currently in the position (%d, 0, %d).\n", this.name, this.type, this.posX, this.posZ);
+        System.out.printf("- The robot \"%s\" (type \"%s\") is currently in the position (%d, %d, %d).\n", this.name, this.type, this.posX, this.posY, this.posZ);
     }
 
     // Method to print the direction a robot is facing

@@ -6,18 +6,10 @@ public class AerialRobot extends BaseRobot {
     private final int maxPosY;
 
     // AerialRobot constructor
-    public AerialRobot(String name, int startX, int startZ, int maxPosY, double distanceRadius) {
-        super(name, startX, startZ, distanceRadius);
+    public AerialRobot(String name, int startX, int startZ, int maxPosY, double sensorRadius) {
+        super(name, startX, startZ, sensorRadius);
         this.setType("Aerial Bot");
         this.maxPosY = maxPosY;
-    }
-
-    // Adapted printPos method
-    // Takes into account the robot's y position instead of the default value of 0
-    @Override
-    // Method to print a robot's coordinates
-    public void printPos() {
-        System.out.printf("- The robot \"%s\" (type \"%s\") is currently in the position (%d, %d, %d).\n", this.getName(), this.getType(), this.getPosX(), this.getPosY(), this.getPosZ());
     }
 
     // Overload of move method
@@ -25,12 +17,11 @@ public class AerialRobot extends BaseRobot {
     public void move(int dX, int dY, int dZ) {
         // Out of bounds check
         if (!BaseRobot.getEnvironment().isWithinBounds(this.getPosX() + dX, this.getPosY() + dY, this.getPosZ() + dZ)) {
-            System.out.println("Position out of bounds. Position unchanged.");
+            System.out.println("Target position out of bounds. Position unchanged.");
         } else {
             // Check if the robot can reach the endpoint's altitude
             if ((this.getPosY() + dY) > this.maxPosY) {
                 System.out.printf("The robot \"%s\" cannot reach that altitude. Position unchanged.\n", this.getName());
-                System.out.println();
             }
             else {
                 // Moves in Y axis first
@@ -40,11 +31,10 @@ public class AerialRobot extends BaseRobot {
 
                 dir = remainingDY > 0 ? "Above" : "Below";
                 while(remainingDY != 0) {
-                    int step = Math.min(Math.abs(remainingDY), (int)this.getObstacleSensor().getDistanceRadius());
+                    int step = Math.min(Math.abs(remainingDY), (int)this.getObstacleSensor().getSensorRadius());
                     if(this.getObstacleSensor().isObstacleAhead(getEnvironment(), this, dir, step)) {
-                        System.out.printf("Obstacle detected %s. Movement stopped.\n", dir);
+                        System.out.printf("Obstacle detected %s. Movement stopped.\n", dir.toLowerCase());
                         System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
-                        System.out.println();
                         return;
                     }
 
@@ -59,6 +49,8 @@ public class AerialRobot extends BaseRobot {
                 // Moves in other axis
                 if(dX!=0 || dZ!=0){ 
                     super.move(dX, dZ);
+                } else {
+                    System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
                 }
             }
         }

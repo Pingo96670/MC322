@@ -2,24 +2,27 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InteractiveMenu {
-    private static boolean ansiCheck = false;
-    private static boolean doAnsi= false;
+    private static boolean ansiCheck = false;   // Whether ansiChecker has already been executed or not
+    private static boolean doAnsi= false;   // Whether ANSI is allowed or not
     private static final String MAIN_MENU = """
             ========== [Main menu] ==========
             1) Robot list
             2) Environment info
             
-            9) Back to execution menu
             0) Exit
             """;
 
+    // Empty private constructor to override public default one
     private InteractiveMenu() {}
 
+    // Prompts an enter press before continuing
     private static void promptEnterPress(Scanner sc) {
         System.out.println("Press \"ENTER\" to continue...");
         sc.nextLine();
     }
 
+    // Main menu
+    // Only public method within the InteractiveMenu class
     public static void mainMenu(Scanner sc, Environment environment) {
         int mainChoice;
 
@@ -44,15 +47,12 @@ public class InteractiveMenu {
                         environmentInfo(sc, environment);
                         break;
 
-                    // Back to previous menu
-                    case 9:
-                        return;
-
                     // End program
                     case 0:
                         System.out.println("Exiting program...");
                         sc.close();
                         System.exit(0);
+                        return;
 
                     // Invalid input
                     default:
@@ -68,6 +68,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Bot selection menu
     private static void botMenu(Scanner sc, Environment environment) {
         int botChoice;
 
@@ -123,6 +124,7 @@ public class InteractiveMenu {
                         System.out.println("Exiting program...");
                         sc.close();
                         System.exit(0);
+                        return;
 
                     // Invalid input
                     default:
@@ -138,6 +140,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Camel bot menu
     private static void camelBotMenu(Scanner sc, Environment environment, CamelRobot camelBot) {
         String camelCmd;
         int dX, dZ, waterAmount;
@@ -170,11 +173,13 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(camelBot.getName(), camelBot.getPosX(), camelBot.getPosY(), camelBot.getPosZ(), camelBot.getDirection(), camelBot.getObstacleSensor().getDistanceRadius(), camelBot.getWaterSensor().getDistanceRadius(), camelBot.getMaxSpeed(), camelBot.getWaterLevel(), camelBot.getStorageCapacity());
+                """.formatted(camelBot.getName(), camelBot.getPosX(), camelBot.getPosY(), camelBot.getPosZ(), camelBot.getDirection(), camelBot.getObstacleSensor().getSensorRadius(), camelBot.getWaterSensor().getSensorRadius(), camelBot.getMaxSpeed(), camelBot.getWaterLevel(), camelBot.getStorageCapacity());
 
+            // Info menu
             if (menuState.equals("INFO")) {
                 System.out.println(camelInfo);
 
+            // Flat map
             } else {
                 ansiChecker(sc);
                 System.out.printf("========== [Bot menu: %s - FLAT MAP] ==========\n", camelBot.getName());
@@ -291,6 +296,7 @@ public class InteractiveMenu {
                     System.out.println("Exiting program...");
                     sc.close();
                     System.exit(0);
+                    return;
 
                 // Invalid input
                 default:
@@ -304,6 +310,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Fast bot menu
     private static void fastBotMenu(Scanner sc, Environment environment, FastBot fastBot) {
         String fastCmd;
         int dX, dZ;
@@ -331,7 +338,7 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(fastBot.getName(), fastBot.getPosX(), fastBot.getPosY(), fastBot.getPosZ(), fastBot.getDirection(), fastBot.getObstacleSensor().getDistanceRadius(), fastBot.getMinSpeed(), fastBot.getMaxSpeed());
+                """.formatted(fastBot.getName(), fastBot.getPosX(), fastBot.getPosY(), fastBot.getPosZ(), fastBot.getDirection(), fastBot.getObstacleSensor().getSensorRadius(), fastBot.getMinSpeed(), fastBot.getMaxSpeed());
 
             if (menuState.equals("INFO")) {
                 System.out.println(fastInfo);
@@ -412,6 +419,7 @@ public class InteractiveMenu {
                     System.out.println("Exiting program...");
                     sc.close();
                     System.exit(0);
+                    return;
 
                 // Invalid input
                 default:
@@ -456,11 +464,13 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(parrotBot.getName(), parrotBot.getPosX(), parrotBot.getPosY(), parrotBot.getPosZ(), parrotBot.getDirection(), parrotBot.getObstacleSensor().getDistanceRadius(), parrotBot.getLearnedPhrases().size());
+                """.formatted(parrotBot.getName(), parrotBot.getPosX(), parrotBot.getPosY(), parrotBot.getPosZ(), parrotBot.getDirection(), parrotBot.getObstacleSensor().getSensorRadius(), parrotBot.getLearnedPhrases().size());
 
+            // Info menu
             if (menuState.equals("INFO")) {
                 System.out.println(parrotInfo);
 
+            // Flat map
             } else {
                 ansiChecker(sc);
                 System.out.printf("========== [Bot menu: %s - FLAT MAP] ==========\n", parrotBot.getName());
@@ -549,6 +559,21 @@ public class InteractiveMenu {
                     promptEnterPress(sc);
                     break;
 
+                // Swaps between menu modes
+                case "swap":
+                    if (menuState.equals("INFO")) {
+                        menuState = "MAP";
+
+                    } else {
+                        menuState = "INFO";
+                    }
+
+                    System.out.printf("Menu mode changed to \"%s\".\n", menuState);
+
+                    sc.nextLine();
+                    promptEnterPress(sc);
+                    break;
+
                 // Environment info
                 case "environment":
                     sc.nextLine();
@@ -566,6 +591,7 @@ public class InteractiveMenu {
                     System.out.println("Exiting program...");
                     sc.close();
                     System.exit(0);
+                    return;
 
                 // Invalid input
                 default:
@@ -579,6 +605,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Jet bot menu
     private static void jetBotMenu(Scanner sc, Environment environment, JetBot jetBot) {
         String jetCmd;
         int dX, dY, dZ, fuelAmount;
@@ -607,11 +634,13 @@ public class InteractiveMenu {
                 - Environment (info)
                 - Back
                 - Exit
-                """.formatted(jetBot.getName(), jetBot.getPosX(), jetBot.getPosY(), jetBot.getPosZ(), jetBot.getDirection(), jetBot.getObstacleSensor().getDistanceRadius(), jetBot.getFuel(), jetBot.getMaxFuel());
+                """.formatted(jetBot.getName(), jetBot.getPosX(), jetBot.getPosY(), jetBot.getPosZ(), jetBot.getDirection(), jetBot.getObstacleSensor().getSensorRadius(), jetBot.getFuel(), jetBot.getMaxFuel());
 
+            // Info menu
             if (menuState.equals("INFO")) {
                 System.out.println(jetInfo);
 
+            // Flat map
             } else {
                 ansiChecker(sc);
                 System.out.printf("========== [Bot menu: %s - FLAT MAP] ==========\n", jetBot.getName());
@@ -704,6 +733,7 @@ public class InteractiveMenu {
                     System.out.println("Exiting program...");
                     sc.close();
                     System.exit(0);
+                    return;
 
                 // Invalid input
                 default:
@@ -717,6 +747,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Environment info menu
     private static void environmentInfo(Scanner sc, Environment environment) {
         int envInfoChoice;
         String ENV_OPTIONS = """
@@ -767,6 +798,7 @@ public class InteractiveMenu {
                         System.out.println("Exiting program...");
                         sc.close();
                         System.exit(0);
+                        return;
 
                     // Invalid option
                     default:
@@ -785,6 +817,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Environment map menu
     private static void mapMenu(Scanner sc, Environment environment) {
         int mapChoice;
         String MAP_INFO = """
@@ -801,11 +834,11 @@ public class InteractiveMenu {
                 """;
 
         sc.nextLine();
-        ansiChecker(sc);
+        ansiChecker(sc);    // Checks if ANSI colors can be used
 
         System.out.println(MAP_INFO);
 
-        environment.printFlatMap(doAnsi);
+        environment.printFlatMap(doAnsi);   // Prints the flat map
 
         System.out.println();
 
@@ -836,6 +869,7 @@ public class InteractiveMenu {
                         System.out.println("Exiting program...");
                         sc.close();
                         System.exit(0);
+                        return;
 
                     // Invalid option
                     default:
@@ -854,6 +888,7 @@ public class InteractiveMenu {
         }
     }
 
+    // Runs a one-time setup (per execution) to check if the user's terminal can display ANSI colors
     private static void ansiChecker(Scanner sc) {
         String ANSI_CHECK = """
                 ========== ANSI configuration ==========
@@ -862,12 +897,14 @@ public class InteractiveMenu {
                 
                 \u001B[31mIs this text red for you?\u001B[0m (Y/N)
                 """;
-
+        // Check if test has been previously ran
         if (!ansiCheck) {
             System.out.print(ANSI_CHECK);
 
+            // Valid answer loop
             while(!ansiCheck) {
                 switch (sc.nextLine().toLowerCase()) {
+                    // Allow ANSI colors
                     case "y":
                         System.out.println("Great! You have an ANSI-capable terminal!");
                         promptEnterPress(sc);
@@ -875,6 +912,7 @@ public class InteractiveMenu {
                         doAnsi = true;
                         break;
 
+                    // Do not allow ANSI colors
                     case "n":
                         System.out.println("Unfortunately, you do not have an ANSI-capable terminal. If possible, search for a capable alternative for a better experience.");
                         promptEnterPress(sc);
@@ -882,6 +920,7 @@ public class InteractiveMenu {
                         doAnsi = false;
                         break;
 
+                    // Invalid input
                     default:
                         System.out.println("Please input a valid answer. (Y/N)");
                         break;

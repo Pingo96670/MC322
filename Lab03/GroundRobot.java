@@ -6,8 +6,8 @@ public class GroundRobot extends BaseRobot {
    private final int maxSpeed;  // Robot's max speed
 
     // GroundRobot constructor
-    public GroundRobot(String name, int posX, int posZ, int maxSpeed, double distanceRadius) {
-        super(name, posX, posZ, distanceRadius);
+    public GroundRobot(String name, int posX, int posZ, int maxSpeed, double sensorRadius) {
+        super(name, posX, posZ, sensorRadius);
         this.maxSpeed = maxSpeed;
         super.setType("Ground Robot");
    }
@@ -22,7 +22,6 @@ public class GroundRobot extends BaseRobot {
        } else {
            System.out.printf("Movement speed of %d exceeds the robot's speed limit of %d. Position unchanged.\n",
                    totalDist, this.maxSpeed);
-           System.out.println();
        }
    }
 

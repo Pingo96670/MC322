@@ -7,8 +7,8 @@ public class JetBot extends AerialRobot {
     private final int maxFuel;  // Max fuel capacity
 
     // JetBot constructor
-    public JetBot(String name, int startX, int startZ, int maxPosY, int maxFuel, double distanceRadius) {
-        super(name, startX, startZ, maxPosY, distanceRadius);
+    public JetBot(String name, int startX, int startZ, int maxPosY, int maxFuel, double sensorRadius) {
+        super(name, startX, startZ, maxPosY, sensorRadius);
         this.setType("Jet Bot");
         this.maxFuel = maxFuel;
         this.fuel = maxFuel;
@@ -29,7 +29,6 @@ public class JetBot extends AerialRobot {
         // Insufficient fuel
         } else {
             System.out.println("The robot does not have enough fuel to move to the desired position. Position unchanged.");
-            System.out.println();
         }
     }
 
@@ -42,17 +41,14 @@ public class JetBot extends AerialRobot {
         } else if (this.fuel + fuelAmount < this.maxFuel) {
             this.fuel += fuelAmount;
             System.out.printf("Robot \"%s\" has been refueled. Current fuel: %d L.\n", this.getName(), this.fuel);
-            System.out.println();
         // Successful operation with new fuel == maxFuel
         } else if (this.fuel + fuelAmount == this.maxFuel) {
             this.fuel += fuelAmount;
             System.out.printf("Robot \"%s\" has been refueled to max capacity.\n", this.getName());
-            System.out.println();
         // New fuel exceeds maxFuel || Sets fuel to max value
         } else {
             this.fuel = this.maxFuel;
             System.out.printf("Fuel exceeds max capacity. Robot \"%s\" has been refueled to max capacity.\n", this.getName());
-            System.out.println();
         }
     }
 
@@ -60,7 +56,6 @@ public class JetBot extends AerialRobot {
     public void printFuel() {
         System.out.printf("The robot \"%s\" has %d liters of fuel.\n",
                 this.getName(), this.fuel);
-        System.out.println();
     }
 
     // Getters and setters

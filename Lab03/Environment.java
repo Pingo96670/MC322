@@ -22,49 +22,57 @@ public class Environment {
         if (obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] == 0) {
             robotList.add(bot);
             obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 1;
+            System.out.printf("Successfully added robot \"%s\" to environment.\n", bot.getName());
         } else {
             throw new RuntimeException("Tried to add a robot to an already occupied position.");
         }
     }
 
     // Removes a robot from robotList
-    // Not called by client
+    // Not supposed to be called by client
     public void removeRobot(BaseRobot bot) {
-        // Removes robot from the obstacleMatrix first
-        obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 0;
-        // Removes robot from robotList
+        int sizeBefore = robotList.size();
+
         robotList.remove(bot);
-        obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 0;
+
+        if (robotList.size() < sizeBefore) {
+            obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 0;
+            System.out.printf("Successfully removed robot \"%s\" from environment.\n", bot.getName());
+        } else {
+            System.out.printf("Failed to remove robot \"%s\" from environment.\n", bot.getName());
+        }
     }
 
     // Adds an obstacle to obstacleList
-    public void addObstacle(int x1, int y1, ObstacleType type) {
+    public void addObstacle(int x1, int z1, ObstacleType type) {
 
         // Verifies if the obstacle's posX1, posX2, posY1, posY2 and height fit within environment's bounds
-        if(isWithinBounds(x1, type.getHeight(), y1) && isWithinBounds(x1+type.getWidth(), type.getHeight(), y1+type.getDepth())) {
+        if(isWithinBounds(x1, type.getHeight(), z1) && isWithinBounds(x1+type.getWidth(), type.getHeight(), z1+type.getDepth())) {
 
             // Verifies if the positions are empty
-            if(isFree(x1, x1+type.getWidth(), y1, y1+type.getDepth(), type.getHeight())) {
-                Obstacle obstacle = new Obstacle(type, x1, y1);
+            if(isFree(x1, x1+type.getWidth(), z1, z1+type.getDepth(), type.getHeight())) {
+                Obstacle obstacle = new Obstacle(type, x1, z1);
                 obstacleList.add(obstacle);
 
                 // Marks the obstacle's positions in obstacleMatrix
                 for(int x = x1; x <= x1+type.getWidth(); x++) {
-                    for(int y = y1; y <= y1+type.getDepth(); y++) {
+                    for(int y = z1; y <= z1+type.getDepth(); y++) {
                         for(int z = 0; z <= type.getHeight(); z++) {
                             obstacleMatrix[x][z][y] = type.getCode();
                         }
                     }
                 }
+
+                System.out.printf("Successfully added obstacle of type \"%s\" to environment.\n", obstacle.getType());
             }
 
-            else{
-                System.out.printf("Failed o add. There is another obstacle in this position.\n");
+            else {
+                System.out.printf("Failed to add. There is another obstacle in this position.\n");
                 System.out.println();
             }
         }
 
-        else{
+        else {
             System.out.printf("Failed to add. Obstacle's dimensions out of environment's bounds.\n");
             System.out.println();
         }
@@ -93,7 +101,10 @@ public class Environment {
         }
     }
 
+    // Prints a flat view of the environment
+    // Can use ANSI colors for ease of reading
     public void printFlatMap(boolean doAnsi) {
+        // Default - No ANSI colors
         String ANSI_RESET = "";
         String ANSI_RED = "";
         String ANSI_GREEN = "";
@@ -121,6 +132,7 @@ public class Environment {
             }
         }
 
+        // Allowing ANSI colors
         if (doAnsi) {
             ANSI_RESET = "\u001B[0m";
             ANSI_RED = "\u001B[31m";
@@ -132,9 +144,10 @@ public class Environment {
 
         System.out.println(MAP_INFO);
 
-        System.out.println("-Z");
+        // Printing out the flat map with for loops
+        System.out.println("+Z (North)");
 
-        for (int z = 0; z <= sizeZ; z++) {
+        for (int z = sizeZ; z >= 0; z--) {
             System.out.print("[ ");
 
             for (int x = 0; x <= sizeX; x++) {
@@ -142,31 +155,37 @@ public class Environment {
                     case 0:
                         System.out.print("0 ");
                         break;
+
                     case 1:
                         System.out.print(ANSI_RED + "B " + ANSI_RESET);
                         break;
+
                     case 2:
                         System.out.print(ANSI_BLUE + "W " + ANSI_RESET);
                         break;
+
                     case 3:
                         System.out.print(ANSI_PURPLE + "R " + ANSI_RESET);
                         break;
+
                     case 4:
                         System.out.print(ANSI_YELLOW + "M " + ANSI_RESET);
                         break;
+
                     case 5:
                         System.out.print(ANSI_GREEN + "T " + ANSI_RESET);
                         break;
+
                     default:
                         throw new RuntimeException("Unrecognized object id identified when parsing obstacle map.");
                 }
 
             }
 
-            if (z < sizeX) {
+            if (z > 0) {
                 System.out.println("]");
             } else {
-                System.out.println("] +X");
+                System.out.println("] +X (East)");
             }
 
         }

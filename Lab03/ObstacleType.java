@@ -4,10 +4,10 @@ public enum ObstacleType {
     MOUNTAIN(3, 3, 5, 4),
     TREE(0, 0, 2, 5);
 
-    private final int width; // positions occupied on X axis after x1
-    private final int depth; // // positions occupied on Z axis after y1
-    private final int height; // positions occupied on Y axis above ground(0)
-    private final int code; // used for identification of the obstacles in the obstacleMatrix
+    private final int width; // Positions occupied on X axis after x1
+    private final int depth; // Positions occupied on Z axis after z1
+    private final int height; // Positions occupied on Y axis above ground(0)
+    private final int code; // Used for identification of the obstacles in the obstacleMatrix
 
     ObstacleType(int width, int depth, int height, int code) {
         this.width = width;
@@ -15,7 +15,8 @@ public enum ObstacleType {
         this.height = height;
         this.code = code;
     }
-    
+
+    // Getters
     public int getWidth() {
         return width;
     }

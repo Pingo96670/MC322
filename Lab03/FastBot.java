@@ -9,8 +9,8 @@ public class FastBot extends GroundRobot {
     private final int minSpeed;
 
     // FastRobot constructor
-    public FastBot(String name, int posX, int posZ, int minSpeed, int maxSpeed, double distanceRadius) {
-        super(name, posX, posZ, maxSpeed, distanceRadius);
+    public FastBot(String name, int posX, int posZ, int minSpeed, int maxSpeed, double sensorRadius) {
+        super(name, posX, posZ, maxSpeed, sensorRadius);
         this.setType("Fast Bot");
         this.minSpeed = minSpeed;
     }
@@ -23,7 +23,6 @@ public class FastBot extends GroundRobot {
             super.move(dX, dZ);
         } else {
             System.out.println("Movement speed is too low for this robot. Position unchanged.");
-            System.out.println();
         }
     }
 

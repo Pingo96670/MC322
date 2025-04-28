@@ -4,8 +4,8 @@ Only CamelRobots have this sensor, it's used to search the nearest water spot in
 
 public class WaterSensor extends Sensor {
     
-    public WaterSensor(double radiusDistance) {
-        super(radiusDistance);
+    public WaterSensor(double sensorRadius) {
+        super(sensorRadius);
     }
 
     @Override
@@ -16,12 +16,12 @@ public class WaterSensor extends Sensor {
 
         int x = robot.getPosX();
         int z = robot.getPosZ();
-        int radius = (int)getDistanceRadius();
+        int radius = (int) getSensorRadius();
         int maxX = environment.getSizeX();
         int maxZ = environment.getSizeZ();
         int [][][]matrix = environment.getObstacleMatrix();
 
-        int distance = Integer.MAX_VALUE; // Começa com max value, e se encontrar uma distância menor, ele atualiza o ponto minX e minZ da posição encontrada
+        int distance = Integer.MAX_VALUE; // Starts with max integer value, then updates minX and minZ if a shorter distance is found
         int closestX = -1;
         int closestZ = -1;
 
@@ -51,7 +51,5 @@ public class WaterSensor extends Sensor {
         else {
             System.out.printf("%s didn't find any water spot nearby.\n", robot.getName());
         }
-
-        System.out.println();
     }
 }

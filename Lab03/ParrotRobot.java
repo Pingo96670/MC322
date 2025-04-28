@@ -9,8 +9,8 @@ public class ParrotRobot extends AerialRobot {
     private final ArrayList<String> learnedPhrases;     // List of phrases learned by the robot
 
     // ParrotRobot constructor
-    public ParrotRobot(String name, int startX, int startZ, int maxPosY, double distanceRadius){
-        super(name, startX, startZ, maxPosY, distanceRadius);
+    public ParrotRobot(String name, int startX, int startZ, int maxPosY, double sensorRadius){
+        super(name, startX, startZ, maxPosY, sensorRadius);
         this.setType("Parrot Bot");
         this.learnedPhrases = new ArrayList<>();
     }
@@ -20,12 +20,10 @@ public class ParrotRobot extends AerialRobot {
         // Checks if the string is empty
         if (phrase.isEmpty()) {
             System.out.println("Invalid input. Must be a non-empty string.");
-            System.out.println();
         // Successful operation
         } else {
             learnedPhrases.add(phrase);
             System.out.printf("Successfully learned phrase \"%s\".\n", phrase);
-            System.out.println();
         }
     }
 
@@ -40,8 +38,6 @@ public class ParrotRobot extends AerialRobot {
         } else {
             System.out.printf("Failed to remove phrase \"%s\". Please make sure you've typed the exact same phrase (case sensitive).\n", phrase);
         }
-
-        System.out.println();
     }
 
     // Randomly prints one of the learned phrases
@@ -49,12 +45,10 @@ public class ParrotRobot extends AerialRobot {
         // Checks if the list is empty
         if(learnedPhrases.isEmpty()) {
             System.out.printf("The Parrot Robot %s hasn't learned any phrases yet.\n", getName());
-            System.out.println();
         // Successful operation
         } else {
             int index = new Random().nextInt(learnedPhrases.size());
             System.out.printf("The Parrot Robot %s says: \"%s\".\n", getName(), learnedPhrases.get(index));
-            System.out.println();
         }
     }
 

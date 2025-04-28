@@ -1,9 +1,9 @@
 public abstract class Sensor {
     private BaseRobot ownerBot;
-    private final double distanceRadius;
+    private final double sensorRadius;
 
-    public Sensor(double distanceRadius) {
-        this.distanceRadius = distanceRadius;
+    public Sensor(double sensorRadius) {
+        this.sensorRadius = sensorRadius;
     }
 
     public abstract void monitor();
@@ -16,7 +16,7 @@ public abstract class Sensor {
         ownerBot = bot;
     }
 
-    public double getDistanceRadius() {
-        return distanceRadius;
+    public double getSensorRadius() {
+        return sensorRadius;
     }
 }
