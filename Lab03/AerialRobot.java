@@ -30,9 +30,9 @@ public class AerialRobot extends BaseRobot {
             // Check if the robot can reach the endpoint's altitude
             if ((this.getPosY() + dY) > this.maxPosY) {
                 System.out.printf("The robot \"%s\" cannot reach that altitude. Position unchanged.\n", this.getName());
+                System.out.println();
             }
             else {
-
                 // Moves in Y axis first
                 int y = getPosY();
                 int remainingDY = dY;
@@ -43,6 +43,8 @@ public class AerialRobot extends BaseRobot {
                     int step = Math.min(Math.abs(remainingDY), (int)this.getObstacleSensor().getDistanceRadius());
                     if(this.getObstacleSensor().isObstacleAhead(getEnvironment(), this, dir, step)) {
                         System.out.printf("Obstacle detected %s. Movement stopped.\n", dir);
+                        System.out.printf("The robot \"%s\" is currently in the position (%d, %d, %d).\n", this.getName(), this.getPosX(), this.getPosY(), this.getPosZ());
+                        System.out.println();
                         return;
                     }
 

@@ -8,8 +8,12 @@ public class WaterSensor extends Sensor {
         super(radiusDistance);
     }
 
-    // Searchs for the closest water spot around the CamelRobot
-    public void monitor(Environment environment, BaseRobot robot) {
+    @Override
+    // Searches for the closest water spot around the CamelRobot
+    public void monitor() {
+        Environment environment = BaseRobot.getEnvironment();
+        BaseRobot robot = this.getOwnerBot();
+
         int x = robot.getPosX();
         int z = robot.getPosZ();
         int radius = (int)getDistanceRadius();
@@ -47,5 +51,7 @@ public class WaterSensor extends Sensor {
         else {
             System.out.printf("%s didn't find any water spot nearby.\n", robot.getName());
         }
+
+        System.out.println();
     }
 }

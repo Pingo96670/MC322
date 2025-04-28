@@ -22,6 +22,7 @@ public class GroundRobot extends BaseRobot {
        } else {
            System.out.printf("Movement speed of %d exceeds the robot's speed limit of %d. Position unchanged.\n",
                    totalDist, this.maxSpeed);
+           System.out.println();
        }
    }
 
