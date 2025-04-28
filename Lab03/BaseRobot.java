@@ -37,7 +37,7 @@ public class BaseRobot {
     public void move(int dX, int dZ) {
         // Out of bounds check
         if (!BaseRobot.environment.isWithinBounds(posX + dX, posY, posZ + dZ)) {
-            System.out.println("Target position out of bounds. Position unchanged.\n");
+            System.out.println("Target position out of bounds. Position unchanged.");
         }
         // Movement logic
         else {

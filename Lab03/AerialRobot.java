@@ -25,7 +25,7 @@ public class AerialRobot extends BaseRobot {
     public void move(int dX, int dY, int dZ) {
         // Out of bounds check
         if (!BaseRobot.getEnvironment().isWithinBounds(this.getPosX() + dX, this.getPosY() + dY, this.getPosZ() + dZ)) {
-            System.out.println("Position out of bounds. Position unchanged.\n");
+            System.out.println("Position out of bounds. Position unchanged.");
         } else {
             // Check if the robot can reach the endpoint's altitude
             if ((this.getPosY() + dY) > this.maxPosY) {
@@ -55,7 +55,9 @@ public class AerialRobot extends BaseRobot {
                 }
 
                 // Moves in other axis
-                super.move(dX, dZ);
+                if(dX!=0 || dZ!=0){ 
+                    super.move(dX, dZ);
+                }
             }
         }
     }

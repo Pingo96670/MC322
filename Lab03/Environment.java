@@ -24,6 +24,9 @@ public class Environment {
 
     // Removes a robot from robotList
     public void removeRobot(BaseRobot bot) {
+        // Removes robot from the obstacleMatrix first
+        obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 0;
+        // Removes robot from robotList
         robotList.remove(bot);
     }
 
