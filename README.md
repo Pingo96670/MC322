@@ -12,7 +12,8 @@ Feito com Java 21.0.5.
     * [A partir da pasta **raiz**](#a-partir-da-pasta-raiz)
     * [A partir da pasta do **Lab*XX***](#a-partir-da-pasta-do-labxx)
 * [Informações - Lab 3](#informações---lab-3)
-    * [Diagrama de classes](#diagrama-de-classes) 
+    * [Diagrama de classes](#diagrama-de-classes)
+    * [Menu de Execução](#menu-de-execução)
     * [Menu Interativo - Geral](#menu-interativo---geral)
     * [Menu de Robôs](#menu-de-robôs)
     * [Menu de Ambiente](#menu-de-ambiente)
@@ -60,16 +61,17 @@ Para compilar e executar o Lab*XX* a partir de sua própria pasta, abra a prompt
   ```
 
 ## Informações - Lab 3
+### Diagrama de Classes
+![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab03/img/Lab03%20-%20UML.jpg "Diagrama de Classes - Lab03")
+
+---
+
+### Menu de Execução
 A partir do menu de execução, é possível selecionar entre duas opções:
 - **Testes automáticos**
     - Conjunto de testes pré-implementados para testar os novos recursos adicionados.
 - **Menu interativo**
     - Menu que permite a execução manual de comandos.
-
----
-
-### Diagrama de Classes
-[PLACEHOLDER]
 
 ---
 
