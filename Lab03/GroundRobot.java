@@ -6,8 +6,8 @@ public class GroundRobot extends BaseRobot {
    private final int maxSpeed;  // Robot's max speed
 
     // GroundRobot constructor
-    public GroundRobot(String name, int posX, int posZ, int maxSpeed) {
-        super(name, posX, posZ);
+    public GroundRobot(String name, int posX, int posZ, int maxSpeed, double sensorRadius) {
+        super(name, posX, posZ, sensorRadius);
         this.maxSpeed = maxSpeed;
         super.setType("Ground Robot");
    }
