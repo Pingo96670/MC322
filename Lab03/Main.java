@@ -29,10 +29,12 @@ public class Main {
         ParrotRobot talky = new ParrotRobot("Talky", 15, 0, 10, 4);
         JetBot jetty = new JetBot("Jetty", 15, 15, 15, 10, 4);
 
+        System.out.println("Preparing program...");
         environment.addRobot(sandy);
         environment.addRobot(speedy);
         environment.addRobot(talky);
         environment.addRobot(jetty);
+        System.out.println();
 
         for (BaseRobot bot: environment.getRobotList()) {
             bot.joinSensor();
