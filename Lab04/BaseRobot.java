@@ -15,6 +15,7 @@ public class BaseRobot {
     // West: -x
     private final ObstacleSensor obstacleSensor;
     private static Environment environment;     // The environment the robot is in || Set directly in main
+    private RobotState state = RobotState.ON;
 
     // BaseRobot constructor
     public BaseRobot(String name, int startX, int startZ, double sensorRadius) {
@@ -166,6 +167,30 @@ public class BaseRobot {
         System.out.printf("- The robot \"%s\" is currently facing %s.\n", this.name, this.direction);
     }
 
+    public void turnOn() {
+        if(state != RobotState.ON) {
+            state = RobotState.ON;
+            System.out.printf("%s is now ON.%n", name);
+        }
+        else {
+            System.out.printf("%s is already ON.%n", name);
+        }
+    }
+
+    public void turnOff() {
+        if(state != RobotState.OFF) {
+            state = RobotState.OFF;
+            System.out.printf("%s is now OFF.%n", name);
+        }
+        else {
+            System.out.printf("%s is already OFF.%n", name);
+        }
+    }
+
+    public boolean isOn() {
+        return state == RobotState.ON;
+    }
+
     // Getters and setters
     public String getName() {
         return this.name;
@@ -221,6 +246,10 @@ public class BaseRobot {
 
     public static void setEnvironment(Environment environment) {
         BaseRobot.environment = environment;
+    }
+
+    public RobotState getState() {
+        return state;
     }
 
 }
