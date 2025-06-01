@@ -216,7 +216,7 @@ public class InteractiveMenu {
                     // Try-catch block to deal with non integer input
                     try {
                         waterAmount = sc.nextInt();
-                        camelBot.fillStorage(waterAmount);
+                        camelBot.fill(waterAmount);
 
                     } catch (InputMismatchException e) {
                         System.out.println("Incorrect syntax for command. Expected: \"Fill [amount]\".");
@@ -661,7 +661,7 @@ public class InteractiveMenu {
                 case "refuel":
                     try {
                         fuelAmount = sc.nextInt();
-                        jetBot.refuel(fuelAmount);
+                        jetBot.fill(fuelAmount);
 
                     } catch (InputMismatchException e) {
                         System.out.println("Incorrect syntax for command. Expected: \"Refuel [amount]\".");

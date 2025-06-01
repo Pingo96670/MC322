@@ -2,8 +2,8 @@
 import java.util.ArrayList;
 
 public class CommunicationCenter{
-    private ArrayList<String> messages = new ArrayList<>();
-    private ArrayList<String> robots = new ArrayList<>();
+    private ArrayList<String> messages = new ArrayList<>(); // Recorded messages
+    private ArrayList<String> robots = new ArrayList<>(); // For eache message in messages, the corresponding sender is stored at the same index in robots
 
     public CommunicationCenter() {
         super();

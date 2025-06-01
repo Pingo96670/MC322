@@ -2,7 +2,7 @@
 The JetBot class is a subclass of AerialRobot which
  */
 
-public class JetBot extends AerialRobot {
+public class JetBot extends AerialRobot implements FluidHandler {
     private int fuel;   // Current fuel in storage
     private final int maxFuel;  // Max fuel capacity
 
@@ -33,8 +33,19 @@ public class JetBot extends AerialRobot {
         }
     }
 
+    // Refill the robot's fuel tank to max capacity
+    public void refill() {
+        if(fuel<maxFuel) {
+            int amount = maxFuel - fuel;
+            fill(amount);
+        }
+        else {
+            System.out.printf("%s's fuel tank is already at full capacity.%n", getName());
+        }
+    }
+
     // Refills the robot's fuel tank by [fuelAmount]
-    public void refuel(int fuelAmount) {
+    public void fill(int fuelAmount) {
         // Checks if the input is valid
         if (fuelAmount <= 0) {
             System.out.println("Invalid input. Must be an integer greater than 0.");
@@ -57,7 +68,7 @@ public class JetBot extends AerialRobot {
     }
 
     // Prints the current volume of fuel in the robot's storage
-    public void printFuel() {
+    public void printFluidLevel() {
         System.out.printf("The robot \"%s\" has %d liters of fuel.\n",
                 this.getName(), this.fuel);
         System.out.println();

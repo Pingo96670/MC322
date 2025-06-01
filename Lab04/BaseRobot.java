@@ -2,7 +2,7 @@
 The BaseRobot class is the basic class meant to be inherited by others.
  */
 
-public class BaseRobot {
+public class BaseRobot implements Sensorable {
     private final String name;    // Robot's name
     private int posX;    // Robot's x coordinate (environment's length)
     private int posY;    // Robot's y coordinate (environment's height)
@@ -189,6 +189,16 @@ public class BaseRobot {
 
     public boolean isOn() {
         return state == RobotState.ON;
+    }
+
+    // Uses all sensors
+    public void activateSensors() {
+        if(state==RobotState.OFF) {
+            System.out.printf("%s is OFF and cannot perform this action.%n", name);
+        }
+        else {
+            lookAllDirections();
+        }
     }
 
     // Getters and setters
