@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Main {
     private static final String INTRODUCTION = """
         ========== Robot Simulator ==========
-        Welcome to update 3 of Robot Simulator!
+        Welcome to update 4 of Robot Simulator!
         For more information on the program and its source code, check out the GitHub page at: https://github.com/Pingo96670/MC322
         """;
 
