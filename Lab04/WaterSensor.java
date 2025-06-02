@@ -4,24 +4,30 @@ Only CamelRobots have this sensor, it's used to search the nearest water spot in
 
 public class WaterSensor extends Sensor {
     
-    public WaterSensor(double radiusDistance) {
-        super(radiusDistance);
+    public WaterSensor(double sensorRadius) {
+        super(sensorRadius);
     }
 
     @Override
     // Searches for the closest water spot around the CamelRobot
-    public void monitor() {
+    public void monitor() throws RobotUnavailableException{
+        // Checks if the robot is ON
+        // Throws RobotUnavailableException otherwise
+        if (!getOwnerBot().isOn()) {
+            throw new RobotUnavailableException("The robot %s is currently OFF. Please turn it on to proceed.".formatted(getOwnerBot().getName()));
+        }
+
         Environment environment = BaseRobot.getEnvironment();
         BaseRobot robot = this.getOwnerBot();
 
         int x = robot.getPosX();
         int z = robot.getPosZ();
-        int radius = (int)getDistanceRadius();
+        int radius = (int) getSensorRadius();
         int maxX = environment.getSizeX();
         int maxZ = environment.getSizeZ();
-        int [][][]matrix = environment.getObstacleMatrix();
+        EntityType[][][] matrix = environment.getEntityTypeMatrix();
 
-        int distance = Integer.MAX_VALUE; // Começa com max value, e se encontrar uma distância menor, ele atualiza o ponto minX e minZ da posição encontrada
+        int distance = Integer.MAX_VALUE; // Starts with max integer value, then updates minX and minZ if a shorter distance is found
         int closestX = -1;
         int closestZ = -1;
 
@@ -32,10 +38,10 @@ public class WaterSensor extends Sensor {
                 if((x+dx)>=0 && (z+dz)>=0 && (x+dx)<=maxX && (z+dz)<=maxZ) {
                     
                     // Verifies if there is a water obstacle in the position
-                    if(matrix[x+dx][0][z+dz]==ObstacleType.WATER.getCode()) {
+                    if(matrix[x+dx][0][z+dz] == EntityType.WATER) {
 
                         // Verifies if the water obstacle is closer than the previous found
-                        if(((dx*dx)+(dz*dz))<distance) {
+                        if(((dx*dx)+(dz*dz)) < distance) {
                             distance = (dx*dx)+(dz*dz);
                             closestX = x + dx;
                             closestZ = z + dz;
@@ -51,7 +57,5 @@ public class WaterSensor extends Sensor {
         else {
             System.out.printf("%s didn't find any water spot nearby.\n", robot.getName());
         }
-
-        System.out.println();
     }
 }

@@ -1,19 +1,64 @@
-public class Obstacle {
-    private final int posX1; 
-    private final int posX2; 
-    private final int posY1; 
-    private final int posY2;
-    private final int height;
-    private final ObstacleType type;
+public class Obstacle implements Entity {
+    private final int posX1;    // X coordinate of southwest corner
+    private final int posX2;    // Z coordinate of southwest corner
+    private final int posZ1;    // X coordinate of northeast corner
+    private final int posZ2;    // Z coordinate of northeast corner
+    private final int height;   // Obstacle's height
+    private final ObstacleType type;    // Obstacle's type
+    private final EntityType entityType;    // Obstacle's entity type
 
     // Constructor
-    public Obstacle(ObstacleType type, int x1, int y1) {
+    public Obstacle(ObstacleType type, int x1, int z1) {
         this.type = type;
         this.posX1 = x1;
-        this.posY1 = y1;
+        this.posZ1 = z1;
         this.posX2 = x1 + type.getWidth();
-        this.posY2 = y1 + type.getDepth();
+        this.posZ2 = z1 + type.getDepth();
         this.height = type.getHeight();
+
+        switch (type) {
+            case WATER -> entityType = EntityType.WATER;
+
+            case ROCK -> entityType = EntityType.ROCK;
+
+            case MOUNTAIN -> entityType = EntityType.MOUNTAIN;
+
+            case TREE -> entityType = EntityType.TREE;
+
+            default -> throw new NoSuchObjectTypeException("Assigned ObstacleType element does not exist in ObstacleType file.");
+        }
+    }
+
+    // Returns the general obstacle description
+    @Override
+    public String getDescription() {
+        return """
+                Obstacles are objects within the environment which block a robot's movement.
+                Each obstacle type has its own dimensions and representing character.
+                All obstacles are grounded (y1 = 0).
+                """;
+    }
+
+    // Returns the obstacle's representing character
+    @Override
+    public char getRepChar() {
+        return type.getRepChar();
+    }
+
+    // Getters for positions of main point
+    @Override
+    public int getPosX() {
+        return posX1;
+    }
+
+    @Override
+    public int getPosY() {
+        return 0;
+    }
+
+    @Override
+    public int getPosZ() {
+        return posZ1;
     }
 
     // Getters
@@ -25,12 +70,12 @@ public class Obstacle {
         return posX2;
     }
 
-    public int getPosY1() {
-        return posY1;
+    public int getPosZ1() {
+        return posZ1;
     }
 
-    public int getPosY2() {
-        return posY2;
+    public int getPosZ2() {
+        return posZ2;
     }
 
     public int getHeight() {
@@ -39,5 +84,10 @@ public class Obstacle {
 
     public ObstacleType getType() {
         return type;
+    }
+
+    @Override
+    public EntityType getEntityType() {
+        return entityType;
     }
 }

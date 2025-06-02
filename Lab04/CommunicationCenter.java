@@ -2,8 +2,8 @@
 import java.util.ArrayList;
 
 public class CommunicationCenter{
-    private ArrayList<String> messages = new ArrayList<>();
-    private ArrayList<String> robots = new ArrayList<>();
+    private final ArrayList<String> messages = new ArrayList<>();
+    private final ArrayList<String> robots = new ArrayList<>();
 
     public CommunicationCenter() {
         super();

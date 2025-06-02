@@ -6,68 +6,88 @@ public class Environment {
     private final int sizeZ;    // Environment's z dimension (depth)
     private final ArrayList<BaseRobot> robotList = new ArrayList<>();   // List of robots in the environment
     private final ArrayList<Obstacle> obstacleList = new ArrayList<>(); // List of obstacles in the environment
-    private final int[][][] obstacleMatrix;     // int boolean multidimensional array of obstacles (0 = empty, 1 = robot, 2 and up = obstacle)
-    private final CommunicationCenter commCenter;
+    private final ArrayList<Entity> entityList = new ArrayList<>(); // List of entities in the environment
+    private final EntityType[][][] entityTypeMatrix;     // int boolean multidimensional array of EntityType elements
+    private final CommunicationCenter commCenter;   // Communication center
 
     // Environment constructor
     public Environment(int sizeX, int sizeY, int sizeZ) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         this.sizeZ = sizeZ;
+
+        this.entityTypeMatrix = new EntityType[sizeX + 1][sizeY + 1][sizeZ + 1];
+
+        for (int i = 0; i <= sizeX; i++) {
+            for (int j = 0; j <= sizeX; j++) {
+                for (int k = 0; k <= sizeX; k++) {
+                    entityTypeMatrix[i][j][k] = EntityType.EMPTY;
+                }
+            }
+        }
+
         this.commCenter = new CommunicationCenter();
-        this.obstacleMatrix = new int[sizeX + 1][sizeY + 1][sizeZ + 1];
     }
 
     // Adds a robot to robotList
-    public void addRobot(BaseRobot bot) {
-        if (obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] == 0) {
+    public void addRobot(BaseRobot bot) throws ObjectOverlapException {
+        if (entityTypeMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] == EntityType.EMPTY && !robotList.contains(bot)) {
             robotList.add(bot);
-            obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 1;
+            entityList.add(bot);
+            entityTypeMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = EntityType.ROBOT;
+            System.out.printf("Successfully added robot \"%s\" to environment.\n", bot.getName());
         } else {
-            throw new RuntimeException("Tried to add a robot to an already occupied position.");
+            throw new ObjectOverlapException("Operation unsuccessful. Tried to add a robot to an already occupied position or robot is already in environment.");
         }
     }
 
     // Removes a robot from robotList
-    // Not called by client
-    public void removeRobot(BaseRobot bot) {
-        // Removes robot from the obstacleMatrix first
-        obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 0;
-        // Removes robot from robotList
+    // Not supposed to be called by client
+    public void removeRobot(BaseRobot bot) throws UnsuccessfulRemovalException {
+        int sizeBefore = robotList.size();
+
         robotList.remove(bot);
-        obstacleMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = 0;
+        entityList.remove(bot);
+
+        if (robotList.size() < sizeBefore) {
+            entityTypeMatrix[bot.getPosX()][bot.getPosY()][bot.getPosZ()] = EntityType.EMPTY;
+            System.out.printf("Successfully removed robot \"%s\" from environment.\n", bot.getName());
+        } else {
+            throw new UnsuccessfulRemovalException("Failed to remove robot from environment.");
+        }
     }
 
     // Adds an obstacle to obstacleList
-    public void addObstacle(int x1, int y1, ObstacleType type) {
+    public void addObstacle(int x1, int z1, ObstacleType type) throws ObjectOverlapException, ObjectOutOfBoundsException {
 
         // Verifies if the obstacle's posX1, posX2, posY1, posY2 and height fit within environment's bounds
-        if(isWithinBounds(x1, type.getHeight(), y1) && isWithinBounds(x1+type.getWidth(), type.getHeight(), y1+type.getDepth())) {
+        if(isWithinBounds(x1, type.getHeight(), z1) && isWithinBounds(x1+type.getWidth(), type.getHeight(), z1+type.getDepth())) {
 
             // Verifies if the positions are empty
-            if(isFree(x1, x1+type.getWidth(), y1, y1+type.getDepth(), type.getHeight())) {
-                Obstacle obstacle = new Obstacle(type, x1, y1);
+            if(isFree(x1, x1+type.getWidth(), z1, z1+type.getDepth(), type.getHeight())) {
+                Obstacle obstacle = new Obstacle(type, x1, z1);
                 obstacleList.add(obstacle);
+                entityList.add(obstacle);
 
                 // Marks the obstacle's positions in obstacleMatrix
                 for(int x = x1; x <= x1+type.getWidth(); x++) {
-                    for(int y = y1; y <= y1+type.getDepth(); y++) {
+                    for(int y = z1; y <= z1+type.getDepth(); y++) {
                         for(int z = 0; z <= type.getHeight(); z++) {
-                            obstacleMatrix[x][z][y] = type.getCode();
+                            entityTypeMatrix[x][z][y] = obstacle.getEntityType();
                         }
                     }
                 }
+
+                System.out.printf("Successfully added obstacle of type \"%s\" to environment.\n", obstacle.getType());
             }
 
-            else{
-                System.out.printf("Failed o add. There is another obstacle in this position.\n");
-                System.out.println();
+            else {
+                throw new ObjectOverlapException("Operation unsuccessful. Tried to add an obstacle to an already occupied position.");
             }
         }
 
-        else{
-            System.out.printf("Failed to add. Obstacle's dimensions out of environment's bounds.\n");
-            System.out.println();
+        else {
+            throw new ObjectOutOfBoundsException("Position of object out of bounds.");
         }
     }
 
@@ -76,7 +96,7 @@ public class Environment {
         for(int x = x1; x <= x2; x++) {
             for(int y = y1; y <= y2; y++) {
                 for(int z = 0; z <= height; z++) {
-                    if(obstacleMatrix[x][z][y] != 0) {
+                    if(entityTypeMatrix[x][z][y] != EntityType.EMPTY) {
                         return false;
                     }
                 }
@@ -94,7 +114,10 @@ public class Environment {
         }
     }
 
+    // Prints a flat view of the environment
+    // Can use ANSI colors for ease of reading
     public void printFlatMap(boolean doAnsi) {
+        // Default - No ANSI colors
         String ANSI_RESET = "";
         String ANSI_RED = "";
         String ANSI_GREEN = "";
@@ -106,22 +129,24 @@ public class Environment {
                 Flat map legend:
                 - 0: Empty
                 - B: Bot (height: 1)
-                 - Aerial bots are omitted when above something else
                 - W: Water (height: 0)
                 - R: Rock (height: 1)
                 - M: Mountain (height: 5)
                 - T: Tree (height: 2)
                 """;
 
-        int[][][] tempMap = obstacleMatrix.clone();
+        EntityType[][][] tempMap = new EntityType[BaseRobot.getEnvironment().getSizeX()+1][BaseRobot.getEnvironment().getSizeY()+1][BaseRobot.getEnvironment().getSizeZ()+1];
+
+        for (int i = 0; i < tempMap.length; i++)
+            for (int j = 0; j < tempMap.length; j++)
+                System.arraycopy(entityTypeMatrix[i][j], 0, tempMap[i][j], 0, tempMap.length);
 
         // Making a copy of obstacleMatrix with aerial robots grounded
         for (BaseRobot bot: robotList) {
-            if (tempMap[bot.getPosX()][0][bot.getPosZ()] == 0) {
-                tempMap[bot.getPosX()][0][bot.getPosZ()] = 1;
-            }
+            tempMap[bot.getPosX()][0][bot.getPosZ()] = EntityType.ROBOT;
         }
 
+        // Allowing ANSI colors
         if (doAnsi) {
             ANSI_RESET = "\u001B[0m";
             ANSI_RED = "\u001B[31m";
@@ -133,41 +158,47 @@ public class Environment {
 
         System.out.println(MAP_INFO);
 
-        System.out.println("-Z");
+        // Printing out the flat map with for loops
+        System.out.println("+Z (North)");
 
-        for (int z = 0; z <= sizeZ; z++) {
+        for (int z = sizeZ; z >= 0; z--) {
             System.out.print("[ ");
 
             for (int x = 0; x <= sizeX; x++) {
                 switch (tempMap[x][0][z]) {
-                    case 0:
-                        System.out.print("0 ");
+                    case EMPTY:
+                        System.out.printf(EntityType.EMPTY.getEntityChar() + " ");
                         break;
-                    case 1:
-                        System.out.print(ANSI_RED + "B " + ANSI_RESET);
-                        break;
-                    case 2:
-                        System.out.print(ANSI_BLUE + "W " + ANSI_RESET);
-                        break;
-                    case 3:
-                        System.out.print(ANSI_PURPLE + "R " + ANSI_RESET);
-                        break;
-                    case 4:
-                        System.out.print(ANSI_YELLOW + "M " + ANSI_RESET);
-                        break;
-                    case 5:
-                        System.out.print(ANSI_GREEN + "T " + ANSI_RESET);
-                        break;
-                    default:
-                        throw new RuntimeException("Unrecognized object id identified when parsing obstacle map.");
-                }
 
+                    case ROBOT:
+                        System.out.print(ANSI_RED + EntityType.ROBOT.getEntityChar() + " " + ANSI_RESET);
+                        break;
+
+                    case WATER:
+                        System.out.print(ANSI_BLUE + EntityType.WATER.getEntityChar() + " " + ANSI_RESET);
+                        break;
+
+                    case ROCK:
+                        System.out.print(ANSI_PURPLE + EntityType.ROCK.getEntityChar() + " " + ANSI_RESET);
+                        break;
+
+                    case MOUNTAIN:
+                        System.out.print(ANSI_YELLOW + EntityType.MOUNTAIN.getEntityChar() + " " + ANSI_RESET);
+                        break;
+
+                    case TREE:
+                        System.out.print(ANSI_GREEN + EntityType.TREE.getEntityChar() + " " + ANSI_RESET);
+                        break;
+
+                    default:
+                        throw new NoSuchObjectTypeException("Unrecognized object ID identified when parsing obstacle map.");
+                }
             }
 
-            if (z < sizeX) {
+            if (z > 0) {
                 System.out.println("]");
             } else {
-                System.out.println("] +X");
+                System.out.println("] +X (East)");
             }
 
         }
@@ -200,11 +231,11 @@ public class Environment {
         return obstacleList;
     }
 
-    public int[][][] getObstacleMatrix() {
-        return obstacleMatrix;
+    public EntityType[][][] getEntityTypeMatrix() {
+        return entityTypeMatrix;
     }
 
-    public CommunicationCenter getCenter() {
+    public CommunicationCenter getCommCenter() {
         return commCenter;
     }
 }

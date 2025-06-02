@@ -12,7 +12,6 @@ public class Main {
         ========== Execution menu ==========
         1) Automated tests
         2) Interactive menu
-        3) Info
         
         0) Exit program
         """;
@@ -25,31 +24,28 @@ public class Main {
         Environment environment = new Environment(15, 15, 15);
         BaseRobot.setEnvironment(environment);
 
-        CamelRobot sandy = new CamelRobot("Sandy", 0, 0, 4, 10, 4, 8);
+        CamelRobot sandy = new CamelRobot("Sandy", 0, 0, 8, 10, 4, 5);
         FastBot speedy = new FastBot("Speedy", 0, 15, 4, 8, 4);
         ParrotRobot talky = new ParrotRobot("Talky", 15, 0, 10, 4);
         JetBot jetty = new JetBot("Jetty", 15, 15, 15, 10, 4);
 
+        System.out.println("Preparing program...");
         environment.addRobot(sandy);
         environment.addRobot(speedy);
         environment.addRobot(talky);
         environment.addRobot(jetty);
+        System.out.println();
 
         for (BaseRobot bot: environment.getRobotList()) {
             bot.joinSensor();
         }
-
-        environment.addObstacle(4, 4, ObstacleType.WATER);
-        environment.addObstacle(3, 13, ObstacleType.ROCK);
-        environment.addObstacle(8, 8, ObstacleType.MOUNTAIN);
-        environment.addObstacle(12, 10, ObstacleType.TREE);
 
         System.out.println(INTRODUCTION);
 
         // Menu selection loop
         while (true) {
             System.out.println(SELECTION);
-            System.out.print("Please select an option: ");
+            System.out.print("Please select an execution method: ");
 
             // Try-catch block to deal with non integer input
             try {
@@ -59,102 +55,134 @@ public class Main {
                     // Automated tests
                     case 1:
                         System.out.println("Running automated tests...\n");
-                        // Prints RobotList
-                        environment.printRobotList();
+
+                        System.out.println("========== Robot exceptions ==========");
+
+                        // Trying to remove inactive robot
+                        System.out.println("---------- Unsuccessful removal ----------");
+                        System.out.println("Attempting to remove robot \"Jetty\" from environment.");
+
+                        try {
+                            environment.removeRobot(jetty);
+                        } catch(UnsuccessfulRemovalException e) {
+                            System.out.println(e);
+                        }
+
+                        System.out.println();
+
+                        // Trying to remove inactive robot
+                        System.out.println("---------- Using deactivated robot ----------");
+                        System.out.println("Switching robot \"Jetty\" OFF.");
+                        jetty.switchState();
+                        System.out.println("Attempting to move robot \"Jetty\".");
+
+                        try {
+                            jetty.move(0, 1, 0);
+                        } catch(RobotUnavailableException e) {
+                            System.out.println(e);
+                        }
+
+                        System.out.println("Switching robot \"Jetty\" ON.");
+                        jetty.switchState();
+
                         System.out.println();
                         
-                        // Obstacles tests
-                        
-                        // Adds obstacle out of the environment bounds
-                        environment.addObstacle(11, 11, ObstacleType.ROCK); 
+                        // Obstacle tests
+                        System.out.println("========== Obstacle exceptions ==========");
+
                         // Adds obstacles in valid positions
-                        environment.addObstacle(9, 9, ObstacleType.TREE); 
-                        environment.addObstacle(8, 8, ObstacleType.ROCK); 
-                        environment.addObstacle(1, 1, ObstacleType.MOUNTAIN); 
-                        environment.addObstacle(6, 6, ObstacleType.WATER);
-                        // Adds obstacle in an occupied position
-                        environment.addObstacle(3, 3, ObstacleType.WATER);
-                        
-                        // Movement tests
-                        
-                        // Moves talky to a valid position
-                        talky.printDir(); talky.printPos();
-                        talky.move(1, 4, -5);
-                        talky.printDir(); talky.printPos();
-                        // Moves talky to invalid positions
-                        talky.move(10, 0, 10);
-                        talky.move(0, 4, 0);
-                        talky.move(-2, 0, -5);
-                        talky.printDir(); talky.printPos();
-                        // Moves speedy with invalid speed
-                        speedy.printDir(); speedy.printPos();
-                        speedy.move(-1, 0);
-                        speedy.move(9, 9);
-                        // Moves speedy to a valid position with valid speed
-                        speedy.move(0, 4);
-                        speedy.printDir(); speedy.printPos();
-                        // Moves jetty withou enough fuel
-                        jetty.move(3, 4, 4);
-                        // Moves jetty with enough fuel
-                        jetty.printDir(); jetty.printPos(); jetty.printFuel();
-                        jetty.move(0, 9, 0);
-                        jetty.printDir(); jetty.printPos(); jetty.printFuel();
+                        System.out.println("---------- Successful addition of obstacles ----------");
+                        System.out.println("Attempting to add obstacles in valid positions.");
 
-                        // Sandy's tests
-                        
-                        // Storage tests
-                        sandy.printStorage();
-                        sandy.fillStorage(5);
-                        sandy.fillStorage(6);
-                        sandy.emptyStorage(5);
-                        sandy.emptyStorage(1);
-                        // Invalid inputs
-                        sandy.fillStorage(-1);
-                        sandy.emptyStorage(-5);
-                        
-                        // Sensor tests
-                        sandy.lookAllDirections();
-                        sandy.searchWater();
-                        // Moves to look all directions again
-                        sandy.move(1, 0);
-                        sandy.lookAllDirections();
+                        environment.addObstacle(4, 4, ObstacleType.WATER);
+                        environment.addObstacle(3, 13, ObstacleType.ROCK);
+                        environment.addObstacle(8, 8, ObstacleType.MOUNTAIN);
+                        environment.addObstacle(12, 10, ObstacleType.TREE);
 
-                        // Talky's tests
-                        
-                        // No phrases in list
-                        talky.speak();
-                        // Learn phrases
-                        talky.learnPhrase("Hello world!");
-                        talky.learnPhrase("Howdy! My name is Talky! Talky the parrot!");
-                        talky.learnPhrase("Beep boop!");
-                        talky.learnPhrase("Talky wants a cracker!");
-                        talky.learnPhrase("404: craker not found!");
-                        // Speak
-                        talky.speak();
-                        talky.speak();
-                        talky.speak();
-                        talky.speak();
-                        talky.speak();
-                        talky.speak();
-                        talky.speak();
-                        talky.speak();
-                        // Forget phrases
-                        talky.forgetPhrase("Hello world!");
-                        talky.forgetPhrase("Howdy! My name is Talky! Talky the parrot!");
-                        talky.forgetPhrase("Beep boop!");
-                        talky.forgetPhrase("Talky wants a cracker!");
-                        talky.forgetPhrase("404: craker not found!");
-                        // Tries to forget a phrase that wasn't learned
-                        talky.forgetPhrase("It's cracker time!");
-                        // No phrases in list (again)
-                        talky.speak();
-                        
                         System.out.println();
-                        break;
+
+                        // Adds obstacle in an occupied position
+                        System.out.println("---------- Overlapping obstacle ----------");
+                        System.out.println("Attempting to add obstacle in position (3, y, 3).");
+
+                        try {
+                            environment.addObstacle(3, 3, ObstacleType.WATER);
+                        } catch(ObjectOverlapException e) {
+                            System.out.println(e);
+                        }
+
+                        System.out.println();
+
+                        // Trying to add obstacle out of the environment bounds
+                        System.out.println("---------- Out of bounds obstacle ----------");
+                        System.out.println("Attempting to add obstacle in position (16, y, 16) while in 15x15x15 environment.");
+
+                        try {
+                            environment.addObstacle(16, 16, ObstacleType.ROCK);
+                        } catch(ObjectOutOfBoundsException e) {
+                            System.out.println(e);
+                        }
+
+                        System.out.println();
+
+                        // Specific tasks
+                        System.out.println("========== Obstacle exceptions ==========");
+                        System.out.println("---------- Special tasks ----------");
+                        System.out.println("Executing Camel Bot's special task...");
+
+                        sandy.specificTask();
+
+                        System.out.println();
+
+                        System.out.println("---------- Fast Bot ----------");
+                        System.out.println("Executing Fast Bot's special task...");
+
+                        speedy.specificTask();
+
+                        System.out.println("---------- Parrot Bot ----------");
+                        talky.learnPhrase("Good morning to everyone");
+                        talky.learnPhrase("Howdy there partner");
+                        talky.learnPhrase("My name is talky");
+
+                        System.out.println("Executing Parrot Bot's special task...");
+
+                        talky.specificTask();
+
+                        System.out.println();
+
+                        System.out.println("---------- Jet Bot ----------");
+                        System.out.println("Executing Jet Bot's special task...");
+
+                        jetty.specificTask();
+
+                        System.out.println();
+
+                        // Communication tests
+                        System.out.println("========== Communication center tests ==========");
+                        System.out.println("---------- Sending messages with Parrot Bot ----------");
+                        talky.sendMessage("Was that the bite of 87?!");
+                        talky.sendMessage("Poyo!");
+                        talky.sendMessage("More More Jump is the BEST!!");
+                        talky.sendMessage("Doot doot");
+
+                        System.out.println();
+
+                        System.out.println("---------- Listing messages stored by the communication center ----------");
+                        environment.getCommCenter().showMessages();
+
+                        return;
 
                     // Interactive menu (manual input)
                     case 2:
                         System.out.println("Initiating interactive menu...\n");
+
+                        environment.addObstacle(4, 4, ObstacleType.WATER);
+                        environment.addObstacle(3, 13, ObstacleType.ROCK);
+                        environment.addObstacle(8, 8, ObstacleType.MOUNTAIN);
+                        environment.addObstacle(12, 10, ObstacleType.TREE);
+
+                        System.out.println();
+
                         InteractiveMenu.mainMenu(scanner, environment);
                         break;
 
@@ -174,7 +202,6 @@ public class Main {
                 System.out.println("Invalid input. Please select a valid number.\n");
                 scanner.nextLine();
             }
-
         }
     }
 }
