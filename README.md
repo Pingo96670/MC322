@@ -11,11 +11,17 @@ Feito com Java 21.0.5.
 * [Execução](#execução)
     * [A partir da pasta **raiz**](#a-partir-da-pasta-raiz)
     * [A partir da pasta do **Lab*XX***](#a-partir-da-pasta-do-labxx)
-* [Informações - Lab 3](#informações---lab-3)
-    * [Diagrama de classes](#diagrama-de-classes)
+* [Novidades - Lab 4](#novidades---lab-4)
+    * [Diagrama de Classes](#diagrama-de-classes)
+    * [Interfaces](#interfaces)
+    * [Exceções](#exceções)
+    * [Central de comunicações](#central-de-comunicações)
+    * [Atualizações para os robôs](#atualizações-para-os-robôs)
+  * [Visão geral do programa](#visão-geral-do-programa)
     * [Menu de Execução](#menu-de-execução)
     * [Menu Interativo - Geral](#menu-interativo---geral)
     * [Menu de Robôs](#menu-de-robôs)
+    * [Menu da Central de Comunicação](#menu-da-central-de-comunicação)
     * [Menu de Ambiente](#menu-de-ambiente)
     * [Mapa Plano](#mapa-plano1)
 * [Reportando problemas](#reportando-problemas)
@@ -67,7 +73,7 @@ Para compilar e executar o Lab*XX* a partir de sua própria pasta, abra a prompt
 
 ## Novidades - Lab 4
 ### Diagrama de Classes
-![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab03/img/Lab03%20-%20UML.jpg "Diagrama de Classes - Lab04")
+![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab04/img/Lab04%20-%20UML.jpg "Diagrama de Classes - Lab04")
 
 ### Interfaces
 Foram implementadas novas interfaces para facilitar a interação e manipulação de objetos com características em comun.
@@ -97,10 +103,8 @@ Essa funcionalidade está relacionada à interface *Communicable*.
 Cada robô possui agora uma tarefa específica e mais complexa que pode ser executada através de seus respectivos menus.
 Além disso, os robôs também podem ser ligados ou desligados.
 
+
 ## Visão geral do programa
-
----
-
 ### Menu de Execução
 A partir do menu de execução, é possível selecionar entre duas opções:
 - **Testes automáticos**
