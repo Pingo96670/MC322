@@ -28,6 +28,7 @@ public class Main {
         FastBot speedy = new FastBot("Speedy", 0, 15, 4, 8, 4);
         ParrotRobot talky = new ParrotRobot("Talky", 15, 0, 10, 4);
         JetBot jetty = new JetBot("Jetty", 15, 15, 15, 10, 4);
+        MoleBot digby = new MoleBot("Digby", -1, -1, 4);
 
         System.out.println("Preparing program...");
         environment.addRobot(sandy);
@@ -188,6 +189,7 @@ public class Main {
 
                     // Exit program
                     case 0:
+                        digby.shutdown();
                         System.out.println("Exiting program...");
                         scanner.close();
                         return;

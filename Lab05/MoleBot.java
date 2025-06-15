@@ -21,8 +21,8 @@ public class MoleBot extends BaseRobot {
         return Math.random() < 0.2; // 20% of chance to find gold
     }
 
-    // Since there are no obstacles in the underground, the MoleBot moves in a different way, ignoring the path and going to random spots
-    // The underground's size is exactly the same of the environment, but the Y(height) axe goes from -1 to -(enrivonmentSizeY)
+    // The MoleBot moves differently from other robots, since the underground has no obstacles, instead of following a path, it randomly teleports to a valid underground position.
+    // The underground shares the same X and Z dimensions as the environment, but it's Y axis ranges from -1 to -environmentSizeY.
     public void move() {
         Random rand = new Random();
         int x = rand.nextInt(16);
@@ -44,6 +44,8 @@ public class MoleBot extends BaseRobot {
     }
 
     public void specificTask() {
+        // Schedules the move function to run periodically:
+        // it starts 10 seconds after the MoleBot is created, and repeats every 15 seconds after.
         executor.scheduleAtFixedRate(() -> {
             move();
         }, 10, 15, TimeUnit.SECONDS); 
