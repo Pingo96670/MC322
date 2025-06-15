@@ -13,24 +13,23 @@ public class MoleBot extends BaseRobot {
     
     public MoleBot(String name, int startX, int startZ, double sensorRadius) {
         super(name, startX, startZ, sensorRadius);
-        this.setPosY(-1); // Robot's default Y position
         specificTask();
     }
 
     // Randomly defines if gold was found
     private boolean foundGold() {
-        return Math.random() < 0.1; // 10% of chance to find gold
+        return Math.random() < 0.2; // 20% of chance to find gold
     }
 
     // Since there are no obstacles in the underground, the MoleBot moves in a different way, ignoring the path and going to random spots
     // The underground's size is exactly the same of the environment, but the Y(height) axe goes from -1 to -(enrivonmentSizeY)
     public void move() {
         Random rand = new Random();
-        int x = rand.nextInt(getEnvironment().getSizeX()+1);
-        int z = rand.nextInt(getEnvironment().getSizeZ()+1);
-        int y = -rand.nextInt(getEnvironment().getSizeY()) - 1;
+        int x = rand.nextInt(16);
+        int z = rand.nextInt(16);
+        int y = -rand.nextInt(15) - 1;
 
-        String text = String.format("Robot %s is moving to position (%d, %d, %d).", x, y, z);
+        String text = String.format("Robot %s is moving to position (%d, %d, %d).", getName(), x, y, z);
         Log.register(text);
 
         setPosX(x);
