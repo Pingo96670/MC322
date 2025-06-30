@@ -1,5 +1,6 @@
 package lab.environment;
 
+// Thrown when attempting to add an object to an already occupied position
 public class ObjectOverlapException extends RuntimeException {
     public ObjectOverlapException() {}
 

@@ -8,7 +8,6 @@ if [ -d "bin" ]; then
     rm -rf bin
 fi
 
-
 # Create the bin directory if it doesn't exist
 mkdir -p "$BIN_DIR"
 

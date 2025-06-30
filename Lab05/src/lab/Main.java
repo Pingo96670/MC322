@@ -80,6 +80,13 @@ public class Main {
                         System.out.println("Executing Mole Bot's automated task");
                         drilly.specificTask();
                         System.out.println("Check the MoleBotLog.txt file in /bin/lab for task details.");
+                        System.out.println("Task logging should begin in a few seconds.\n");
+
+                        System.out.println("Press \"ENTER\" to stop Mole Bot's execution and close the program.");
+                        scanner.nextLine();
+                        scanner.nextLine();
+                        scanner.close();
+                        drilly.shutdown();
 
                         return;
 

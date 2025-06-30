@@ -19,4 +19,3 @@ echo.
 
 rem Run Main class after compiling
 java -cp bin lab/Main
-

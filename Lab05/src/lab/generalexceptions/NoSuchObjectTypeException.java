@@ -2,6 +2,7 @@ package lab.generalexceptions;
 
 import java.util.NoSuchElementException;
 
+// Thrown when attempting to call an unregistered object type
 public class NoSuchObjectTypeException extends NoSuchElementException {
     public NoSuchObjectTypeException() {}
 

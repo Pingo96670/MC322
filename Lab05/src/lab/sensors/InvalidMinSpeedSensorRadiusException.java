@@ -1,5 +1,6 @@
 package lab.sensors;
 
+// Throw when attempting to instance a Fast Bot robot type with minSpeed > sensorRadius
 public class InvalidMinSpeedSensorRadiusException extends IllegalArgumentException {
     public InvalidMinSpeedSensorRadiusException() {}
 

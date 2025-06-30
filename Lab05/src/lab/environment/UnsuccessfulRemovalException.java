@@ -1,5 +1,6 @@
 package lab.environment;
 
+// Thrown on failure to remove an object from the environment
 public class UnsuccessfulRemovalException extends RuntimeException {
     public UnsuccessfulRemovalException() {}
 

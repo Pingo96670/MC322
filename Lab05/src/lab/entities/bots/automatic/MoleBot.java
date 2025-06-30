@@ -14,9 +14,13 @@ public class MoleBot extends BaseRobot {
     private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private int goldAmount = 0;
     private boolean isRunning = false;
+    private static final String MOLE_BOT_LOG_PATH = "bin/lab/MoleBotLog.txt";
     
     public MoleBot(String name, int startX, int startZ, double sensorRadius) {
         super(name, startX, startZ, sensorRadius);
+        setIsAutomatic(true);
+
+        Log.resetLogFile(MOLE_BOT_LOG_PATH);
     }
 
     // Randomly defines if gold was found
@@ -33,7 +37,7 @@ public class MoleBot extends BaseRobot {
         int y = -rand.nextInt(15) - 1;
 
         String text = String.format("Robot %s is moving to position (%d, %d, %d).", getName(), x, y, z);
-        Log.register(text);
+        Log.register(MOLE_BOT_LOG_PATH, text);
 
         setPosX(x);
         setPosY(y);
@@ -42,18 +46,20 @@ public class MoleBot extends BaseRobot {
         if(foundGold()) {
             goldAmount = goldAmount + 1;
             text = String.format("Robot %s found gold! Total gold collected: %d.", getName(), goldAmount);
-            Log.register(text);
+            Log.register(MOLE_BOT_LOG_PATH, text);
         }
     }
 
+    // Randomly searches for gold at specific intervals
     public void specificTask() {
         // Schedules the move function to run periodically:
-        // it starts 10 seconds after the MoleBot is created, and repeats every 15 seconds after.
+        // it starts 10 seconds after the MoleBot is created, and repeats every 5 seconds after.
         executor.scheduleAtFixedRate(() -> {
             move();
         }, 10, 5, TimeUnit.SECONDS);
     }
 
+    // Ends execution of the thread running Mole Bot
     public void shutdown() {
         executor.shutdown();
     }

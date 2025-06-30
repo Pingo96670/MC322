@@ -17,8 +17,8 @@ Feito com Java 21.0.5.
 * [Visão geral do programa](#visão-geral-do-programa)
     * [Menu de Execução](#menu-de-execução)
     * [Menu Interativo - Geral](#menu-interativo---geral)
-    * [Menu de Robôs](#menu-de-robôs)
-    * [Menu de Tarefas Automáticas](#menu-de-tarefas-automáticas)
+    * [Menu de Robôs Manuais](#menu-de-robôs-manuais)
+    * [Menu de Robôs Automáticos](#menu-de-robôs-automáticos)
     * [Menu da Central de Comunicação](#menu-da-central-de-comunicação)
     * [Menu de Ambiente](#menu-de-ambiente)
     * [Mapa Plano](#mapa-plano1)
@@ -64,7 +64,7 @@ Para compilar e executar o Lab*XX* (01 a 04) a partir da pasta **raiz** do proje
   java -cp LabXX Main
   ```
 
-OBS: O Lab05 não pode ser executado dessa maneira. Veja a segunda seção seguinte
+**OBS: O Lab05 não pode ser executado dessa maneira. Veja a seção seguinte para compilar e rodá-lo.**
 
 ### A partir da pasta do **Lab*XX***
 Para compilar e executar o Lab*XX* (01 a 04) a partir de sua própria pasta, abra a prompt de comando na pasta "LabXX" e use:
@@ -75,17 +75,23 @@ Para compilar e executar o Lab*XX* (01 a 04) a partir de sua própria pasta, abr
   ```
 
 Para compilar e executar o Lab05:
-- Em Windows: Execute o arquivo *run.bat*
-- Em Linux/MacOS: Execute o arquivo *run.sh*
+- Em Windows: Execute o arquivo *"compile and run (Windows).bat"*
+- Em Linux/MacOS: Execute o arquivo *compile and run (Linux & Mac).sh*
+
+Para próximas execuções, é possível utilizar o *script "run"* para seu respectivo sistema operacional.
 
 OBS: A compilação por *script* pode levar alguns segundos
 
 ## Novidades - Lab 5
 ### Diagrama de Classes
-![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab05/img/Lab05%20-%20UML.jpg "Diagrama de Classes - Lab05")
+![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab05/resources/Lab05%20-%20UML.jpg "Diagrama de Classes - Lab05")
 
 ### Mole Bot e registro em arquivo
-### TODO
+O novo robô Mole Bot é executado a partir do Menu de Tarefas Automáticas, e rodará continuamente no fundo do programa até o término da execução.
+- **Drilly - Mole Robot:**
+  - Após iniciado, rodará até o término do programa
+  - Busca por ouro de forma aleatória em uma região abaixo do ambiente
+  - Registra as células analisadas e o ouro encontrado no arquivo "MoleBotLog.txt", na pasta principal do programa
 
 ## Visão geral do programa
 ### Menu de Execução
@@ -102,8 +108,8 @@ O menu interativo utiliza, de forma geral, a navegação numerada, e permite rea
 
 ---
 
-### Menu de Robôs
-O menu de robôs permite a seleção de um robô para ser controlado. Cada robô possui características e comandos específicos, os quais são detalhados em seus respectivos menus.
+### Menu de Robôs Manuais
+O menu de robôs manuais permite a seleção de um robô para ser controlado. Cada robô possui características e comandos específicos, os quais são detalhados em seus respectivos menus.
 
 Os submenus dos robôs aceitam comando em texto. Os comando não são *case sensitive*, e palavras entre parênteses (não colchetes) não são necessárias para leitura do comando.
 
@@ -128,8 +134,8 @@ O modo do menu pode ser trocado através do comando "SWAP".
 
 ---
 
-### Menu de Tarefas Automáticas
-## TODO
+### Menu de Robôs Automáticos
+O menu de robôs automáticos permite executar os robôs automatizados, sendo o único implementado o Mole Bot.
 
 ---
 

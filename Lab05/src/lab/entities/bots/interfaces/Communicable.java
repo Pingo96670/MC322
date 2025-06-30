@@ -1,5 +1,6 @@
 package lab.entities.bots.interfaces;
 
+// Establishes a robot's communication capacity
 public interface Communicable {
     String getName();
     boolean isOn();

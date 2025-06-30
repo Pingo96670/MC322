@@ -23,6 +23,7 @@ public abstract class BaseRobot implements Entity, Sensorable {
     private static Environment environment;     // The environment the robot is in || Set directly in main
     private static final EntityType entityType = EntityType.ROBOT;
     private RobotState state = RobotState.ON;
+    private boolean isAutomatic = false;
 
     // BaseRobot constructor
     public BaseRobot(String name, int startX, int startZ, double sensorRadius) {
@@ -312,6 +313,14 @@ public abstract class BaseRobot implements Entity, Sensorable {
 
     public RobotState getState() {
         return state;
+    }
+
+    public boolean getIsAutomatic() {
+        return isAutomatic;
+    }
+
+    public void setIsAutomatic(boolean bool) {
+        this.isAutomatic = bool;
     }
 
     @Override

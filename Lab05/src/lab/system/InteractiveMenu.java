@@ -18,8 +18,8 @@ public class InteractiveMenu {
     private static boolean doAnsi= false;   // Whether ANSI is allowed or not
     private static final String MAIN_MENU = """
             ========== [Main Menu] ==========
-            1) Robot list
-            2) Automatic tasks
+            1) Manual robots
+            2) Automatic robots
             3) Communication center menu
             4) Environment info
             
@@ -59,6 +59,7 @@ public class InteractiveMenu {
                     // Automatic tasks menu
                     case 2:
                         automaticTasksMenu(sc, (MoleBot)environment.getRobotList().get(4));
+                        break;
 
                     // Communication center menu
                     case 3:
@@ -98,11 +99,14 @@ public class InteractiveMenu {
         // Menu loop
         while (true) {
             // List available bots for selection
-            System.out.println("========== [Bot Menu] ==========");
+            System.out.println("========== [Manual Bots Menu] ==========");
 
             for (int i = 0; i < environment.getRobotList().size(); i++) {
                 BaseRobot currentBot = environment.getRobotList().get(i);
-                System.out.printf("%d) %s (%s) [%s]\n", i+1, currentBot.getName(), currentBot.getRobotType(), currentBot.getState());
+
+                if (!currentBot.getIsAutomatic()) {
+                    System.out.printf("%d) %s (%s) [%s]\n", i + 1, currentBot.getName(), currentBot.getRobotType(), currentBot.getState());
+                }
             }
 
             System.out.println();
@@ -903,7 +907,7 @@ public class InteractiveMenu {
     private static void automaticTasksMenu(Scanner sc, MoleBot moleBot) {
         int autoChoice;
         final String TASK_MENU = """
-            ========== [Automatic Tasks Menu] ==========
+            ========== [Automatic Bots Menu] ==========
             1) Execute Mole Bot's automatic task (gold digging)
 
             9) Back
@@ -918,7 +922,6 @@ public class InteractiveMenu {
             // Try-catch block to deal with non integer input
             try {
                 autoChoice = sc.nextInt();
-                System.out.println();
 
                 switch (autoChoice) {
                     // Run MoleBot's automatic task
