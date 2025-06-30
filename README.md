@@ -11,16 +11,14 @@ Feito com Java 21.0.5.
 * [Execução](#execução)
     * [A partir da pasta **raiz**](#a-partir-da-pasta-raiz)
     * [A partir da pasta do **Lab*XX***](#a-partir-da-pasta-do-labxx)
-* [Novidades - Lab 4](#novidades---lab-4)
+* [Novidades - Lab 5](#novidades---lab-5)
     * [Diagrama de Classes](#diagrama-de-classes)
-    * [Interfaces](#interfaces)
-    * [Exceções](#exceções)
-    * [Central de comunicações](#central-de-comunicações)
-    * [Atualizações para os robôs](#atualizações-para-os-robôs)
-  * [Visão geral do programa](#visão-geral-do-programa)
+    * [Mole Bot e registro em arquivo](#mole-bot-e-registro-em-arquivo)
+* [Visão geral do programa](#visão-geral-do-programa)
     * [Menu de Execução](#menu-de-execução)
     * [Menu Interativo - Geral](#menu-interativo---geral)
-    * [Menu de Robôs](#menu-de-robôs)
+    * [Menu de Robôs Manuais](#menu-de-robôs-manuais)
+    * [Menu de Robôs Automáticos](#menu-de-robôs-automáticos)
     * [Menu da Central de Comunicação](#menu-da-central-de-comunicação)
     * [Menu de Ambiente](#menu-de-ambiente)
     * [Mapa Plano](#mapa-plano1)
@@ -47,6 +45,9 @@ Este projeto consiste em um simulador de robôs, com progressiva adição de nov
     - Exceções
     - Central de comunicações
     - Ações específicas para os robôs
+- Lab05
+    - Organização em *packages*
+    - Robô automatizado *MoleBot*, com logging em arquivo .txt
 
 ## Dupla
 - Kauã Rodrigues da Conceição
@@ -56,53 +57,41 @@ Este projeto consiste em um simulador de robôs, com progressiva adição de nov
 
 ## Execução
 ### A partir da pasta **raiz**
-Para compilar e executar o Lab*XX* a partir da pasta **raiz** do projeto, abra a prompt de comando na pasta "MC322" e use:
+Para compilar e executar o Lab*XX* (01 a 04) a partir da pasta **raiz** do projeto, abra a prompt de comando na pasta "MC322" e use:
 
   ```
   javac LabXX/*.java
   java -cp LabXX Main
   ```
 
+**OBS: O Lab05 não pode ser executado dessa maneira. Veja a seção seguinte para compilar e rodá-lo.**
+
 ### A partir da pasta do **Lab*XX***
-Para compilar e executar o Lab*XX* a partir de sua própria pasta, abra a prompt de comando na pasta "LabXX" e use:
+Para compilar e executar o Lab*XX* (01 a 04) a partir de sua própria pasta, abra a prompt de comando na pasta "LabXX" e use:
 
   ```
   javac *.java
   java Main
   ```
 
-## Novidades - Lab 4
+Para compilar e executar o Lab05:
+- Em Windows: Execute o arquivo *"compile and run (Windows).bat"*
+- Em Linux/MacOS: Execute o arquivo *compile and run (Linux & Mac).sh*
+
+Para próximas execuções, é possível utilizar o *script "run"* para seu respectivo sistema operacional.
+
+OBS: A compilação por *script* pode levar alguns segundos
+
+## Novidades - Lab 5
 ### Diagrama de Classes
-![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab04/img/Lab04%20-%20UML.jpg "Diagrama de Classes - Lab04")
+![alt text](https://github.com/Pingo96670/MC322/blob/main/Lab05/resources/Lab05%20-%20UML.jpg "Diagrama de Classes - Lab05")
 
-### Interfaces
-Foram implementadas novas interfaces para facilitar a interação e manipulação de objetos com características em comun.
-- Communicable: Estabelece a capacidade de comunicação de um robô.
-- Entity: Engloba objetos do ambiente, como robôs e obstáculos.
-- FluidHandler: Estabelece funcionalidades.
-- SelfLearner: Interface voltada para robôs adaptativos. Atualmente apenas implementada no tipo Parrot Bot.
-- Sensorable: Engloba qualquer robô capaz de usar sensores.
-- WaterCarrier: Especificação de FluidHandler. Atualmente apenas implementada no tipo Camel Bot.
-
-### Exceções
-Novas exceções foram adicionadas para lidar com situações específicas:
-- InvalidMinSpeedException: Lançada quando um robô Fast Bot tenta ser criado com misSpeed > sensorRadius.
-- NoSuchObjectTypeException: Lançada quando um tipo não registrado de objeto (obstáculo, entidade) tenta ser chamado.
-- ObjectOutOfBoundsException: Lançada na tentativa de adicionar um obstáculo fora dos limites do ambiente.
-- ObjectOverlapException: Lançada na tentativa de adicionar um obstáculo em uma posição que já possui outro objeto.
-- RobotUnavailableException: Lançada na tentativa de usar uma ação (íntegra) de um robô desligado. 
-- UnsuccessfulRemovalException: Lançada quando um robô não pôde ser retirado de robotList.
-
-Os métodos que lançam essas exceções estão registrados com *throws*.
-
-### Central de comunicações
-O menu da central de comunicação é simples, permitindo a visualização de todas as mensagens registradas por ela.
-Essa funcionalidade está relacionada à interface *Communicable*.
-
-### Atualizações para os robôs
-Cada robô possui agora uma tarefa específica e mais complexa que pode ser executada através de seus respectivos menus.
-Além disso, os robôs também podem ser ligados ou desligados.
-
+### Mole Bot e registro em arquivo
+O novo robô Mole Bot é executado a partir do Menu de Tarefas Automáticas, e rodará continuamente no fundo do programa até o término da execução.
+- **Drilly - Mole Robot:**
+  - Após iniciado, rodará até o término do programa
+  - Busca por ouro de forma aleatória em uma região abaixo do ambiente
+  - Registra as células analisadas e o ouro encontrado no arquivo "MoleBotLog.txt", na pasta principal do programa
 
 ## Visão geral do programa
 ### Menu de Execução
@@ -119,8 +108,8 @@ O menu interativo utiliza, de forma geral, a navegação numerada, e permite rea
 
 ---
 
-### Menu de Robôs
-O menu de robôs permite a seleção de um robô para ser controlado. Cada robô possui características e comandos específicos, os quais são detalhados em seus respectivos menus.
+### Menu de Robôs Manuais
+O menu de robôs manuais permite a seleção de um robô para ser controlado. Cada robô possui características e comandos específicos, os quais são detalhados em seus respectivos menus.
 
 Os submenus dos robôs aceitam comando em texto. Os comando não são *case sensitive*, e palavras entre parênteses (não colchetes) não são necessárias para leitura do comando.
 
@@ -142,6 +131,11 @@ Para um resumo dos robôs disponíveis, temos:
 Cada submenu de robô possui dois modos, ***INFO***, que contém informações sobre o robô e uma lista de comandos, e ***FLAT MAP***[^1], que apresenta um mapa plano do ambiente, permitindo a fácil visualização do movimento do robô.
 
 O modo do menu pode ser trocado através do comando "SWAP".
+
+---
+
+### Menu de Robôs Automáticos
+O menu de robôs automáticos permite executar os robôs automatizados, sendo o único implementado o Mole Bot.
 
 ---
 
